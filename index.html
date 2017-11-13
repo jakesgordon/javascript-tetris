@@ -68,8 +68,10 @@
     // game constants
     //-------------------------------------------------------------------------
 
-    var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40 },
-        DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
+    var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, SHIFT: 16 },
+	// drop all the way to BOTTOM is an action, but MAX=3 to avoid reaching
+	// it by rotation
+        DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, BOTTOM:4, MIN: 0, MAX: 3 },
         stats   = new Stats(),
         canvas  = get('canvas'),
         ctx     = canvas.getContext('2d'),
@@ -216,11 +218,17 @@
       var handled = false;
       if (playing) {
         switch(ev.keyCode) {
-          case KEY.LEFT:   actions.push(DIR.LEFT);  handled = true; break;
-          case KEY.RIGHT:  actions.push(DIR.RIGHT); handled = true; break;
-          case KEY.UP:     actions.push(DIR.UP);    handled = true; break;
-          case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
-          case KEY.ESC:    lose();                  handled = true; break;
+          case KEY.LEFT:  actions.push(DIR.LEFT);   handled = true; break;
+          case KEY.RIGHT: actions.push(DIR.RIGHT);  handled = true; break;
+          case KEY.UP:    actions.push(DIR.UP);     handled = true; break;
+          case KEY.DOWN:  actions.push(DIR.DOWN);   handled = true; break;
+          case KEY.SHIFT:
+	    // special care to only push once, even if it stays pressed
+ 	    if( actions[0] != DIR.BOTTOM ) {
+ 		actions.push(DIR.BOTTOM); handled = true;
+ 	    }
+	    break;
+          case KEY.ESC:   lose();                   handled = true; break;
         }
       }
       else if (ev.keyCode == KEY.SPACE) {
@@ -277,10 +285,11 @@
 
     function handle(action) {
       switch(action) {
-        case DIR.LEFT:  move(DIR.LEFT);  break;
-        case DIR.RIGHT: move(DIR.RIGHT); break;
-        case DIR.UP:    rotate();        break;
-        case DIR.DOWN:  drop();          break;
+        case DIR.LEFT:   move(DIR.LEFT);  break;
+        case DIR.RIGHT:  move(DIR.RIGHT); break;
+        case DIR.UP:     rotate();        break;
+        case DIR.DOWN:   drop();          break;
+        case DIR.BOTTOM: dropMany();      break;
       }
     }
 
@@ -321,6 +330,19 @@
         if (occupied(current.type, current.x, current.y, current.dir)) {
           lose();
         }
+      }
+    }
+
+    function dropMany() {
+      while( move(DIR.DOWN) ) { }
+      addScore(10);
+      dropPiece();
+      removeLines();
+      setCurrentPiece(next);
+      setNextPiece(randomPiece());
+      clearActions();
+      if (occupied(current.type, current.x, current.y, current.dir)) {
+        lose();
       }
     }
 
