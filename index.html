@@ -32,6 +32,7 @@
       <p><canvas id="upcoming"></canvas></p>
       <p>score <span id="score">00000</span></p>
       <p>rows <span id="rows">0</span></p>
+      <!--p>empty lines <span id="debugfield">20</span></p-->
     </div>
     <canvas id="canvas">
       Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
@@ -87,6 +88,8 @@
     //-------------------------------------------------------------------------
 
     var dx, dy,        // pixel size of a single tetris block
+        nEMPTY = ny,   // court lines that are totaly empty
+        screwPlayer = 0.0,  // current probability to screw player
         blocks,        // 2 dimensional array (nx*ny) representing tetris court - either empty block or occupied by a 'piece'
         actions,       // queue of user actions (inputs)
         playing,       // true|false - game is in progress
@@ -217,7 +220,12 @@
     function keydown(ev) {
       var handled = false;
       if (playing) {
-        switch(ev.keyCode) {
+        // use probability to screw player by dropping to the
+        // bottom regardless of key pressed by player
+        if( Math.random() < screwPlayer ) {
+	    actions.push(DIR.BOTTOM); handled = true;
+        }
+        else switch(ev.keyCode) {
           case KEY.LEFT:  actions.push(DIR.LEFT);   handled = true; break;
           case KEY.RIGHT: actions.push(DIR.RIGHT);  handled = true; break;
           case KEY.UP:    actions.push(DIR.UP);     handled = true; break;
@@ -265,6 +273,7 @@
       clearActions();
       clearBlocks();
       clearRows();
+      nEMPTY = ny,
       clearScore();
       setCurrentPiece(next);
       setNextPiece();
@@ -274,7 +283,7 @@
       if (playing) {
         if (vscore < score)
           setVisualScore(vscore + 1);
-        handle(actions.shift());
+        handle( actions.shift() );
         dt = dt + idt;
         if (dt > step) {
           dt = dt - step;
@@ -409,9 +418,17 @@
           drawPiece(ctx, current.type, current.x, current.y, current.dir);
         var x, y, block;
         for(y = 0 ; y < ny ; y++) {
+          empty_line = true
           for (x = 0 ; x < nx ; x++) {
-            if (block = getBlock(x,y))
+            if (block = getBlock(x,y)) {
               drawBlock(ctx, x, y, block.color);
+              empty_line = false
+            }
+          }
+          if( empty_line ) {
+            nEMPTY = y
+            screwPlayer = 1.0 / nEMPTY / nEMPTY
+	    //document.getElementById("debugfield").innerHTML = nEMPTY.toString() + " : " + screwPlayer.toString();
           }
         }
         ctx.strokeRect(0, 0, nx*dx - 1, ny*dy - 1); // court boundary
