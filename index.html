@@ -70,9 +70,10 @@
     //-------------------------------------------------------------------------
 
     var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, SHIFT: 16 },
-	// drop all the way to BOTTOM is an action, but MAX=3 to avoid reaching
-	// it by rotation
-        DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, BOTTOM:4, MIN: 0, MAX: 3 },
+	// drop all the way to BOTTOM is an action
+	// IGNORE subsequent actions is also an action
+	// BUT: MAX=3 to avoid reaching these two pseudo-actions by rotation
+        DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, BOTTOM:4, IGNORE:5, MIN: 0, MAX: 3 },
         stats   = new Stats(),
         canvas  = get('canvas'),
         ctx     = canvas.getContext('2d'),
@@ -81,7 +82,8 @@
         speed   = { start: 0.6, decrement: 0.005, min: 0.1 }, // how long before piece drops by 1 row (seconds)
         nx      = 10, // width of tetris court (in blocks)
         ny      = 20, // height of tetris court (in blocks)
-        nu      = 5;  // width/height of upcoming preview (in blocks)
+        nu      = 5,  // width/height of upcoming preview (in blocks)
+        frStart = 8;  // player frustration active when 8 or fewer empty rows
 
     //-------------------------------------------------------------------------
     // game variables (initialized during reset)
@@ -220,24 +222,47 @@
     function keydown(ev) {
       var handled = false;
       if (playing) {
-        // use probability to screw player by dropping to the
-        // bottom regardless of key pressed by player
-        if( Math.random() < screwPlayer ) {
-	    actions.push(DIR.BOTTOM); handled = true;
+        if( (nEMPTY<=frStart) && (Math.random()<screwPlayer) ) {
+          // screw player by inserting IGNORE actions.
+	  // This is just inserted here, to be
+	  // acted upon later when handling key events
+	  n = Math.random( 1, 8 )
+	  //document.getElementById("debugfield").innerHTML = "IGNORE " + n.toString();
+	  for( ; n>0 ; --n ) {
+	    actions.push( DIR.IGNORE );
+          }
         }
-        else switch(ev.keyCode) {
-          case KEY.LEFT:  actions.push(DIR.LEFT);   handled = true; break;
-          case KEY.RIGHT: actions.push(DIR.RIGHT);  handled = true; break;
-          case KEY.UP:    actions.push(DIR.UP);     handled = true; break;
-          case KEY.DOWN:  actions.push(DIR.DOWN);   handled = true; break;
-          case KEY.SHIFT:
-	    // special care to only push once, even if it stays pressed
- 	    if( actions[0] != DIR.BOTTOM ) {
- 		actions.push(DIR.BOTTOM); handled = true;
- 	    }
-	    break;
-          case KEY.ESC:   lose();                   handled = true; break;
+        if( ev.keyCode == KEY.ESC ) {
+	  lose(); handled = true;
         }
+        else if( (nEMPTY<=frStart) && (Math.random()<screwPlayer) ) {
+          // screw player by dropping to the
+          // bottom regardless of key pressed by player
+	  actions.push( DIR.BOTTOM );
+	  handled = true;
+        }
+        else {
+          if( (actions.length>0) && (actions[0]==DIR.IGNORE) ) {
+	    //document.getElementById("debugfield").innerHTML = "DIR.IGNORE";
+            actions.shift();
+            handled = true; 
+          }
+          else {
+	    //document.getElementById("debugfield").innerHTML = "NOT DIR.IGNORE";
+            switch(ev.keyCode) {
+              case KEY.LEFT:  actions.push(DIR.LEFT);   handled = true; break;
+              case KEY.RIGHT: actions.push(DIR.RIGHT);  handled = true; break;
+              case KEY.UP:    actions.push(DIR.UP);     handled = true; break;
+              case KEY.DOWN:  actions.push(DIR.DOWN);   handled = true; break;
+              case KEY.SHIFT:
+	        // special care to only push once, even if it stays pressed
+ 	        if( actions[0] != DIR.BOTTOM ) {
+                  actions.push(DIR.BOTTOM); handled = true;
+ 	        }
+	        break;
+            }
+          }
+	}
       }
       else if (ev.keyCode == KEY.SPACE) {
         play();
@@ -427,7 +452,7 @@
           }
           if( empty_line ) {
             nEMPTY = y
-            screwPlayer = 1.0 / nEMPTY / nEMPTY
+            screwPlayer = 1.0 / nEMPTY
 	    //document.getElementById("debugfield").innerHTML = nEMPTY.toString() + " : " + screwPlayer.toString();
           }
         }
