@@ -37,7 +37,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 
 var KEY = {
         ESC: 27,
-        SPACE: 32,
+        //SPACE: 32,
         LEFT: 37,
         UP: 38,
         RIGHT: 39,
@@ -235,6 +235,9 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
+    document.getElementById("play").addEventListener("click", function(){
+        play();
+    });
 }
 
 function resize(event) {
@@ -273,10 +276,10 @@ function keydown(ev) {
                 handled = true;
                 break;
         }
-    } else if (ev.keyCode == KEY.SPACE) {
+    } /* else if (ev.keyCode == KEY.SPACE) {
         play();
         handled = true;
-    }
+    } */
     if (handled) 
         ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
     }
@@ -286,12 +289,12 @@ function keydown(ev) {
 // -------------------------------------------------------------------------
 
 function play() {
-    hide('start');
+    hide('play');
     reset();
     playing = true;
 }
 function lose() {
-    show('start');
+    show('play');
     setVisualScore();
     playing = false;
 }
