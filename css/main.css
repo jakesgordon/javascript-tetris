@@ -67,7 +67,7 @@ body {
     display:none;
 }
 
-.menu-link > div{
+.home-link > div{
     text-transform: uppercase;
 }
 
@@ -75,7 +75,11 @@ body {
     cursor: pointer;
 }
 
-.menu{
+#home{
     border:1px solid;
     text-align: center;
+}
+
+#home > h1 {
+    text-transform: uppercase;
 }

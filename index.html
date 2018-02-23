@@ -7,21 +7,21 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/media.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
 </head>
 
 <body onload="chargerPage();">
 
   <div class="container">
-    <div class="menu">
+    <div id="home">
       <h1>Tetris In JavaScript</h1>
 
-      <div class="menu-link">
+      <div class="home-link">
         <div id="play">New Game</div>
         <div>
-          <span class="prec" onClick="prec();">
-            < </span>
-              <span class="choice"></span>
-              <span class="suiv" onClick="suiv();"> > </span>
+          <span class="prec" onClick="prec();"> < </span>
+          <span class="choice"></span>
+          <span class="suiv" onClick="suiv();"> > </span>
         </div>
         <div>High Score</div>
       </div>
@@ -30,37 +30,7 @@
   </div>
 
 
-  <script>
-    var levels = ['slow', 'normal', 'fast', 'insane'];
-    var indice = 1;
-    function chargerPage() {
-      $('#tetris').addClass('hide');
-      level(indice);
-    }
 
-    function prec() {
-        indice -= 1;
-        level(indice);
-      }
-
-
-    function suiv() {
-      if (levels.length);
-      indice += 1;
-      level(indice);
-    }
-
-    function level(i) {
-      if (indice == 0) {$('.prec').addClass('hide');}
-      else{$('.prec').removeClass('hide');}
-
-      if (indice == levels.length-1) {$('.suiv').addClass('hide');}
-      else{$('.suiv').removeClass('hide');}
-      
-      $('.choice').html(levels[i]);
-    }
-
-  </script>
 
   <div id="tetris">
     <div id="menu">
@@ -83,8 +53,20 @@
   </div>
 
 
+<div id="highscore">
+  <h1>High Score</h1>
+  ... ....... .... <br/>
+  ... ....... .... <br/>
+  ... ....... .... <br/>
+  ... ....... .... <br/>
+  ... ....... .... <br/>
+  ... ....... .... <br/>
+  ... ....... .... <br/>
+</div>
+
 
   <script src="js/stats.js"></script>
+  <script src="js/functionsFlo.js"></script>
   <script src="js/functions.js"></script>
   <script src="js/run.js"></script>
   <script src="js/main.js"></script>

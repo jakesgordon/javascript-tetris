@@ -3,7 +3,6 @@
     //-------------------------------------------------------------------------
 
     function run() {
-
         showStats(); // initialize FPS counter
         addEvents(); // attach keydown and resize events
   
