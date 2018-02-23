@@ -4,7 +4,7 @@
   <title>Javascript Tetris</title>
   <link rel="stylesheet" href="css/main.css"/>
   <link rel="stylesheet" href="css/media.css"/>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -15,6 +15,11 @@
       <p><canvas id="upcoming"></canvas></p>
       <p>score <span id="score">00000</span></p>
       <p>rows <span id="rows">0</span></p>
+      <p>
+        <br>
+        <a class="pause hide">Reprendre</a><br>
+        <a class="pause hide">Abandonner</a>
+      </p>
     </div>
     <canvas id="canvas">
       Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element

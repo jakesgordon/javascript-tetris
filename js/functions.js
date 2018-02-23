@@ -57,9 +57,10 @@ var KEY = {
     ucanvas = get('upcoming'),
     uctx = ucanvas.getContext('2d'),
     speed = {
-        start: 0.6,
-        decrement: 0.005,
-        min: 0.1
+        start: 0.6,     // vitesse de départ des blocs
+        decrement: 0.005,   // a chaque fois que le joueur detruit une row
+                            // le jeu s'accélere de speed.start - (speed.decrement * row)
+        min: 0.1        // vitesse maximum des blocs
     }, // how long before piece drops by 1 row (seconds)
     nx = 10, // width of tetris court (in blocks)
     ny = 20, // height of tetris court (in blocks)
@@ -74,6 +75,7 @@ var dx,
     blocks, // 2 dimensional array (nx*ny) representing tetris court - either empty block or occupied by a 'piece'
     actions, // queue of user actions (inputs)
     playing, // true|false - game is in progress
+    pause,  // if the game is in pause or not
     dt, // time since starting this game
     current, // the current piece
     next, // the next piece
@@ -272,7 +274,7 @@ function keydown(ev) {
                 handled = true;
                 break;
             case KEY.ESC:
-                lose();
+                resume();
                 handled = true;
                 break;
         }
@@ -293,6 +295,20 @@ function play() {
     reset();
     playing = true;
 }
+
+function resume(){
+    if(pause){
+        $('.pause').toggleClass( "hide" );
+        pause = false;
+    }else{
+        $('.pause').toggleClass( "hide" );
+
+        
+
+        pause = true;
+    }
+}
+
 function lose() {
     show('play');
     setVisualScore();
