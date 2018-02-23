@@ -5,12 +5,15 @@
 function get(id) {
     return document.getElementById(id);
 }
+
 function hide(id) {
     get(id).style.visibility = 'hidden';
 }
+
 function show(id) {
     get(id).style.visibility = null;
 }
+
 function html(id, html) {
     get(id).innerHTML = html;
 }
@@ -18,9 +21,11 @@ function html(id, html) {
 function timestamp() {
     return new Date().getTime();
 }
+
 function random(min, max) {
     return (min + (Math.random() * (max - min)));
 }
+
 function randomChoice(choices) {
     return choices[Math.round(random(0, choices.length - 1))];
 }
@@ -57,10 +62,10 @@ var KEY = {
     ucanvas = get('upcoming'),
     uctx = ucanvas.getContext('2d'),
     speed = {
-        start: 0.6,     // vitesse de départ des blocs
-        decrement: 0.005,   // a chaque fois que le joueur detruit une row
-                            // le jeu s'accélere de speed.start - (speed.decrement * row)
-        min: 0.1        // vitesse maximum des blocs
+        start: 0.6, // vitesse de départ des blocs
+        decrement: 0.005, // a chaque fois que le joueur detruit une row
+        // le jeu s'accélere de speed.start - (speed.decrement * row)
+        min: 0.1 // vitesse maximum des blocs
     }, // how long before piece drops by 1 row (seconds)
     nx = 10, // width of tetris court (in blocks)
     ny = 20, // height of tetris court (in blocks)
@@ -75,7 +80,7 @@ var dx,
     blocks, // 2 dimensional array (nx*ny) representing tetris court - either empty block or occupied by a 'piece'
     actions, // queue of user actions (inputs)
     playing, // true|false - game is in progress
-    pause,  // if the game is in pause or not
+    pause, // if the game is in pause or not
     dt, // time since starting this game
     current, // the current piece
     next, // the next piece
@@ -173,10 +178,9 @@ function eachblock(type, x, y, dir, fn) {
 function occupied(type, x, y, dir) {
     var result = false
     eachblock(type, x, y, dir, function (x, y) {
-        if ((x < 0) || (x >= nx) || (y < 0) || (y >= ny) || getBlock(x, y)) 
+        if ((x < 0) || (x >= nx) || (y < 0) || (y >= ny) || getBlock(x, y))
             result = true;
-        }
-    );
+    });
     return result;
 }
 
@@ -188,8 +192,9 @@ function unoccupied(type, x, y, dir) {
 // and pick randomly until the 'bag is empty'
 // -----------------------------------------
 var pieces = [];
+
 function randomPiece() {
-    if (pieces.length == 0) 
+    if (pieces.length == 0)
         pieces = [
             i,
             i,
@@ -237,8 +242,15 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
-    document.getElementById("play").addEventListener("click", function(){
+    document.getElementById("play").addEventListener("click", function () {
         play();
+    });
+    document.getElementById("reprendre").addEventListener("click", function () {
+        resume();
+    });
+    document.getElementById("abandonner").addEventListener("click", function () {
+        resume();
+        lose();
     });
 }
 
@@ -278,13 +290,14 @@ function keydown(ev) {
                 handled = true;
                 break;
         }
-    } /* else if (ev.keyCode == KEY.SPACE) {
-        play();
-        handled = true;
-    } */
-    if (handled) 
-        ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
     }
+    /* else if (ev.keyCode == KEY.SPACE) {
+           play();
+           handled = true;
+       } */
+    if (handled)
+        ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
+}
 
 // ------------------------------------------------------------------------- GAME
 // LOGIC
@@ -296,15 +309,13 @@ function play() {
     playing = true;
 }
 
-function resume(){
-    if(pause){
-        $('.pause').toggleClass( "hide" );
+// fonction pause
+function resume() {
+    if (pause) {
+        $('.pause').toggleClass("hide");
         pause = false;
-    }else{
-        $('.pause').toggleClass( "hide" );
-
-        
-
+    } else {
+        $('.pause').toggleClass("hide");
         pause = true;
     }
 }
@@ -319,48 +330,60 @@ function setVisualScore(n) {
     vscore = n || score;
     invalidateScore();
 }
+
 function setScore(n) {
     score = n;
     setVisualScore(n);
 }
+
 function addScore(n) {
     score = score + n;
 }
+
 function clearScore() {
     setScore(0);
 }
+
 function clearRows() {
     setRows(0);
 }
+
 function setRows(n) {
     rows = n;
     step = Math.max(speed.min, speed.start - (speed.decrement * rows));
     invalidateRows();
 }
+
 function addRows(n) {
     setRows(rows + n);
 }
+
 function getBlock(x, y) {
-    return (blocks && blocks[x]
-        ? blocks[x][y]
-        : null);
+    return (blocks && blocks[x] ?
+        blocks[x][y] :
+        null);
 }
+
 function setBlock(x, y, type) {
     blocks[x] = blocks[x] || [];
     blocks[x][y] = type;
     invalidate();
 }
+
 function clearBlocks() {
     blocks = [];
     invalidate();
 }
+
 function clearActions() {
     actions = [];
 }
+
 function setCurrentPiece(piece) {
     current = piece || randomPiece();
     invalidate();
 }
+
 function setNextPiece(piece) {
     next = piece || randomPiece();
     invalidateNext();
@@ -378,14 +401,17 @@ function reset() {
 
 function update(idt) {
     if (playing) {
-        if (vscore < score) 
-            setVisualScore(vscore + 1);
-        handle(actions.shift());
-        dt = dt + idt;
-        if (dt > step) {
-            dt = dt - step;
-            drop();
+        if (!pause) {
+            if (vscore < score)
+                setVisualScore(vscore + 1);
+            handle(actions.shift());
+            dt = dt + idt;
+            if (dt > step) {
+                dt = dt - step;
+                drop();
+            }
         }
+
     }
 }
 
@@ -431,9 +457,9 @@ function move(dir) {
 }
 
 function rotate() {
-    var newdir = (current.dir == DIR.MAX
-        ? DIR.MIN
-        : current.dir + 1);
+    var newdir = (current.dir == DIR.MAX ?
+        DIR.MIN :
+        current.dir + 1);
     if (unoccupied(current.type, current.x, current.y, newdir)) {
         current.dir = newdir;
         invalidate();
@@ -468,9 +494,9 @@ function removeLines() {
     for (y = ny; y > 0; --y) {
         complete = true;
         for (x = 0; x < nx; ++x) {
-            if (!getBlock(x, y)) 
+            if (!getBlock(x, y))
                 complete = false;
-            }
+        }
         if (complete) {
             removeLine(y);
             y = y + 1; // recheck same line
@@ -487,12 +513,12 @@ function removeLine(n) {
     var x,
         y;
     for (y = n; y >= 0; --y) {
-        for (x = 0; x < nx; ++x) 
-            setBlock(x, y, (y == 0)
-                ? null
-                : getBlock(x, y - 1));
-        }
+        for (x = 0; x < nx; ++x)
+            setBlock(x, y, (y == 0) ?
+                null :
+                getBlock(x, y - 1));
     }
+}
 
 // -------------------------------------------------------------------------
 // RENDERING
@@ -503,12 +529,15 @@ var invalid = {};
 function invalidate() {
     invalid.court = true;
 }
+
 function invalidateNext() {
     invalid.next = true;
 }
+
 function invalidateScore() {
     invalid.score = true;
 }
+
 function invalidateRows() {
     invalid.rows = true;
 }
@@ -527,17 +556,17 @@ function draw() {
 function drawCourt() {
     if (invalid.court) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (playing) 
+        if (playing)
             drawPiece(ctx, current.type, current.x, current.y, current.dir);
         var x,
             y,
             block;
         for (y = 0; y < ny; y++) {
             for (x = 0; x < nx; x++) {
-                if (block = getBlock(x, y)) 
+                if (block = getBlock(x, y))
                     drawBlock(ctx, x, y, block.color);
-                }
             }
+        }
         ctx.strokeRect(0, 0, nx * dx - 1, ny * dy - 1); // court boundary
         invalid.court = false;
     }
@@ -582,4 +611,3 @@ function drawBlock(ctx, x, y, color) {
     ctx.fillRect(x * dx, y * dy, dx, dy);
     ctx.strokeRect(x * dx, y * dy, dx, dy)
 }
-
