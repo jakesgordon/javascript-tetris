@@ -62,3 +62,7 @@ body {
     bottom: 0em;
     right: 1em;
 }
+
+.hide{
+    display:none;
+}
