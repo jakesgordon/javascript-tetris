@@ -312,10 +312,15 @@ function play() {
 // fonction pause
 function resume() {
     if (pause) {
-        $('.pause').toggleClass("hide");
+        $( "#menuPause" ).fadeOut( "fast", function() {
+            // Animation complete
+        });
         pause = false;
     } else {
-        $('.pause').toggleClass("hide");
+
+        $( "#menuPause" ).fadeIn( "fast", function() {
+            // Animation complete
+        });
         pause = true;
     }
 }
