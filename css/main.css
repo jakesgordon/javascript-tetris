@@ -1,7 +1,9 @@
 body {
     font-family: Helvetica, sans-serif;
 }
-
+a{
+    cursor: pointer;
+}
 #tetris {
     margin: 1em auto;
     padding: 1em;
