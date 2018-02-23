@@ -235,6 +235,10 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
+    document.getElementById("play").addEventListener("click", function(){
+        $('#tetris').toggleClass('hide');
+        play();
+    });
 }
 
 function resize(event) {

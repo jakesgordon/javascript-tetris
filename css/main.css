@@ -66,3 +66,16 @@ body {
 .hide{
     display:none;
 }
+
+.menu-link > div{
+    text-transform: uppercase;
+}
+
+.prec, .suiv{
+    cursor: pointer;
+}
+
+.menu{
+    border:1px solid;
+    text-align: center;
+}
