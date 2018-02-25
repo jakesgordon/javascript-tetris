@@ -4,7 +4,7 @@
 
     function run() {
         showStats(); // initialize FPS counter
-        addEvents(); // attach keydown and resize events
+        addEvents(); // attach keydown/resize events/buttons events
   
         var last = now = timestamp();
         function frame() {

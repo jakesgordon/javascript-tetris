@@ -3,11 +3,10 @@
 
 <head>
   <title>Javascript Tetris</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/media.css" />
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/media.css"/>
+  <link href="css/hover-min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 </head>
 
 <body onload="chargerPage();">
@@ -33,20 +32,21 @@
 
 
 
+  <div id="menuPause" class="hide">
+      <h1>TETRIS</h1>
+    <p>
+      <button id="reprendre" class="hvr-sweep-to-right">Reprendre</button>
+      <button id="abandonner" class="hvr-sweep-to-left">Abandonner</button>
+    </p>
+    
+
+  </div>
+
   <div id="tetris">
     <div id="menu">
-      <p id="start">
-        <a href="javascript:play();">Press Space to Play.</a>
-      </p>
-      <p>
-        <canvas id="upcoming"></canvas>
-      </p>
-      <p>score
-        <span id="score">00000</span>
-      </p>
-      <p>rows
-        <span id="rows">0</span>
-      </p>
+      <p><canvas id="upcoming"></canvas></p>
+      <p>score <span id="score">00000</span></p>
+      <p>rows <span id="rows">0</span></p>
     </div>
     <canvas id="canvas">
       Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element

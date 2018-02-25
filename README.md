@@ -21,14 +21,14 @@ FUTURE
 
 TÂCHES
 ======
-* 1 - affichage de fin de partie (proposition rejouer / retour menu) 
+* 1 - affichage de fin de partie (proposition rejouer / retour menu) ~ GAB
 * 2 - Page Menu avec "Play game" / "Levels" / "high score" ~ FLORENT
 * 3 - fonctionnalité Play Game ~ GAB
 * 4 - fonctionnalité Levels 
 * 5 - Page High Score qui affiche les HighScores enregistrés en cookie avec option reset 
 * 6 - fonctionnalité de musique de fond avec bouton lancer/couper 
-* 7 - fonctionnalité pause 
-* 8 - Resystilisé l'interface : 
+* 7 - fonctionnalité pause ~ GAB
+* 8 - Restylisé l'interface : 
     * 8.1 - changer couleur bloc
     * 8.2 - changer css page de jeu
 
