@@ -241,7 +241,24 @@ function addEvents() {
         play();
     });
 
-    $()
+    $('#highscore-link').click(function() {
+        $('#highscore').toggleClass('hide');
+        $('#home').toggleClass('hide');
+        
+      });
+      
+    $('#back-home').click(function() {
+        $('#highscore').toggleClass('hide');
+        $('#home').toggleClass('hide');
+        
+      });
+
+            
+    $('#highscore').click(function() {
+        $('#highscore').toggleClass('hide');
+        $('#home').toggleClass('hide');
+        
+      });
 }
 
 function resize(event) {

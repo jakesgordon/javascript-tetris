@@ -83,3 +83,7 @@ body {
 #home > h1 {
     text-transform: uppercase;
 }
+
+#play,#prec,#suiv,#highscore-link, #back-home {
+    cursor : pointer;
+}
