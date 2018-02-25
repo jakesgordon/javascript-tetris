@@ -21,7 +21,7 @@ FUTURE
 
 TÂCHES
 ======
-* 1 - affichage de fin de partie (proposition rejouer / retour menu) 
+* 1 - affichage de fin de partie (proposition rejouer / retour menu) ~ GAB
 * 2 - Page Menu avec "Play game" / "Levels" / "high score" ~ FLORENT
 * 3 - fonctionnalité Play Game ~ GAB
 * 4 - fonctionnalité Levels 
