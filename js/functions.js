@@ -1,5 +1,5 @@
-// ------------------------------------------------------------------------- base
-// helper methods
+// -------------------------------------------------------------------------
+// base helper methods
 // -------------------------------------------------------------------------
 
 function get(id) {
@@ -36,8 +36,8 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
     }
 }
 
-// ------------------------------------------------------------------------- game
-// constants
+// -------------------------------------------------------------------------
+// game constants
 // -------------------------------------------------------------------------
 
 var KEY = {
@@ -71,8 +71,8 @@ var KEY = {
     ny = 20, // height of tetris court (in blocks)
     nu = 5; // width/height of upcoming preview (in blocks)
 
-// ------------------------------------------------------------------------- game
-// variables (initialized during reset)
+// -------------------------------------------------------------------------
+// game variables (initialized during reset)
 // -------------------------------------------------------------------------
 
 var dx,
@@ -93,12 +93,12 @@ var dx,
 // tetris pieces
 //
 // blocks: each element represents a rotation of the piece (0, 90, 180, 270)
-//     each element is a 16 bit integer where the 16 bits represent         a
-// 4x4 set of blocks, e.g. j.blocks[0] = 0x44C0
+// each element is a 16 bit integer where the 16 bits represent         a 4x4
+// set of blocks, e.g. j.blocks[0] = 0x44C0
 //
 //             0100 = 0x4 << 3 = 0x4000             0100 = 0x4 << 2 = 0x0400
-//         1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000
-//                       ------                               0x44C0
+//     1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000
+//           ------                               0x44C0
 //
 //-------------------------------------------------------------------------
 
@@ -172,15 +172,16 @@ function eachblock(type, x, y, dir, fn) {
     }
 }
 
-// ----------------------------------------------------- check if a piece can fit
-// into a position in the grid
+// ----------------------------------------------------- check if a piece can
+// fit into a position in the grid
 // -----------------------------------------------------
 function occupied(type, x, y, dir) {
     var result = false
     eachblock(type, x, y, dir, function (x, y) {
-        if ((x < 0) || (x >= nx) || (y < 0) || (y >= ny) || getBlock(x, y))
+        if ((x < 0) || (x >= nx) || (y < 0) || (y >= ny) || getBlock(x, y)) 
             result = true;
-    });
+        }
+    );
     return result;
 }
 
@@ -188,13 +189,13 @@ function unoccupied(type, x, y, dir) {
     return !occupied(type, x, y, dir);
 }
 
-// ----------------------------------------- start with 4 instances of each piece
-// and pick randomly until the 'bag is empty'
+// ----------------------------------------- start with 4 instances of each
+// piece and pick randomly until the 'bag is empty'
 // -----------------------------------------
 var pieces = [];
 
 function randomPiece() {
-    if (pieces.length == 0)
+    if (pieces.length == 0) 
         pieces = [
             i,
             i,
@@ -242,36 +243,40 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
-    document.getElementById("play").addEventListener("click", function(){
-        $('#tetris').toggleClass('hide');
+    document
+        .getElementById("play")
+        .addEventListener("click", function () {
+            $('#tetris').toggleClass('hide');
+            $('#home').toggleClass('hide');
+            play();
+        });
+    document
+        .getElementById("reprendre")
+        .addEventListener("click", function () {
+            resume();
+        });
+    document
+        .getElementById("abandonner")
+        .addEventListener("click", function () {
+            resume();
+            lose();
+        });
+
+    $('#highscore-link').click(function () {
+        $('#highscore').toggleClass('hide');
         $('#home').toggleClass('hide');
-        play();
+
     });
 
-    $('#highscore-link').click(function() {
+    $('#back-home').click(function () {
         $('#highscore').toggleClass('hide');
         $('#home').toggleClass('hide');
-        
-      });
-      
-    $('#back-home').click(function() {
-        $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');
-        
-      });
 
-            
-    $('#highscore').click(function() {
+    });
+
+    $('#highscore').click(function () {
         $('#highscore').toggleClass('hide');
         $('#home').toggleClass('hide');
-        
-      });
-    document.getElementById("reprendre").addEventListener("click", function () {
-        resume();
-    });
-    document.getElementById("abandonner").addEventListener("click", function () {
-        resume();
-        lose();
     });
 }
 
@@ -316,15 +321,15 @@ function keydown(ev) {
            play();
            handled = true;
        } */
-    if (handled)
+    if (handled) 
         ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
-}
+    }
 
-// ------------------------------------------------------------------------- GAME
-// LOGIC
+// -------------------------------------------------------------------------
+// GAME LOGIC
 // -------------------------------------------------------------------------
 
-function setSpeed(){
+function setSpeed() {
     speed.start = levels[indice].speed;
 }
 function play() {
@@ -337,15 +342,17 @@ function play() {
 // fonction pause
 function resume() {
     if (pause) {
-        $( "#menuPause" ).fadeOut( "fast", function() {
-            // Animation complete
-        });
+        $("#menuPause")
+            .fadeOut("fast", function () {
+                // Animation complete
+            });
         pause = false;
     } else {
 
-        $( "#menuPause" ).fadeIn( "fast", function() {
-            // Animation complete
-        });
+        $("#menuPause")
+            .fadeIn("fast", function () {
+                // Animation complete
+            });
         pause = true;
     }
 }
@@ -354,6 +361,8 @@ function lose() {
     show('play');
     setVisualScore();
     playing = false;
+    scookie('tonio',233,330);
+    alert(gcookie('tonio'));
 }
 
 function setVisualScore(n) {
@@ -389,9 +398,9 @@ function addRows(n) {
 }
 
 function getBlock(x, y) {
-    return (blocks && blocks[x] ?
-        blocks[x][y] :
-        null);
+    return (blocks && blocks[x]
+        ? blocks[x][y]
+        : null);
 }
 
 function setBlock(x, y, type) {
@@ -432,7 +441,7 @@ function reset() {
 function update(idt) {
     if (playing) {
         if (!pause) {
-            if (vscore < score)
+            if (vscore < score) 
                 setVisualScore(vscore + 1);
             handle(actions.shift());
             dt = dt + idt;
@@ -487,9 +496,9 @@ function move(dir) {
 }
 
 function rotate() {
-    var newdir = (current.dir == DIR.MAX ?
-        DIR.MIN :
-        current.dir + 1);
+    var newdir = (current.dir == DIR.MAX
+        ? DIR.MIN
+        : current.dir + 1);
     if (unoccupied(current.type, current.x, current.y, newdir)) {
         current.dir = newdir;
         invalidate();
@@ -524,9 +533,9 @@ function removeLines() {
     for (y = ny; y > 0; --y) {
         complete = true;
         for (x = 0; x < nx; ++x) {
-            if (!getBlock(x, y))
+            if (!getBlock(x, y)) 
                 complete = false;
-        }
+            }
         if (complete) {
             removeLine(y);
             y = y + 1; // recheck same line
@@ -543,12 +552,12 @@ function removeLine(n) {
     var x,
         y;
     for (y = n; y >= 0; --y) {
-        for (x = 0; x < nx; ++x)
-            setBlock(x, y, (y == 0) ?
-                null :
-                getBlock(x, y - 1));
+        for (x = 0; x < nx; ++x) 
+            setBlock(x, y, (y == 0)
+                ? null
+                : getBlock(x, y - 1));
+        }
     }
-}
 
 // -------------------------------------------------------------------------
 // RENDERING
@@ -586,17 +595,17 @@ function draw() {
 function drawCourt() {
     if (invalid.court) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (playing)
+        if (playing) 
             drawPiece(ctx, current.type, current.x, current.y, current.dir);
         var x,
             y,
             block;
         for (y = 0; y < ny; y++) {
             for (x = 0; x < nx; x++) {
-                if (block = getBlock(x, y))
+                if (block = getBlock(x, y)) 
                     drawBlock(ctx, x, y, block.color);
+                }
             }
-        }
         ctx.strokeRect(0, 0, nx * dx - 1, ny * dy - 1); // court boundary
         invalid.court = false;
     }
