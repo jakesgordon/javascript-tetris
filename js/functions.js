@@ -243,25 +243,20 @@ function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
     $('#play').click(function(){
-        $('#tetris').toggleClass('hide');
-        $('#home').toggleClass('hide');
+        showHomeMenu();
         play();
     });
 
     $('#highscore-link').click(function() {
-        $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');
+        showHighscore();
     });
       
     $('#back-home').click(function() {
-        $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');  
+        showHighscore();  
     });
-
             
     $('#highscore').click(function() {
-        $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');
+        showHighscore();
     });
 
     $("#reprendre").click(function () {
@@ -270,6 +265,7 @@ function addEvents() {
     $("#abandonner").click(function () {
         resume();
         lose();
+        showHomeMenu();
     });
     $("#retourMenu").click(function () {
         $( "#menuLose" ).fadeOut( "fast", function() {
@@ -351,7 +347,6 @@ function resume() {
         });
         pause = false;
     } else {
-
         $( "#menuResume" ).fadeIn( "fast", function() {
             // Animation complete
         });
@@ -361,11 +356,23 @@ function resume() {
 
 function lose() {
     setVisualScore();
+    pause = false;
+    playing = false;
+}
+
+function showLoseMenu(){
     $( "#menuLose" ).fadeIn( "fast", function() {
         // Animation complete
     });
-    pause = false;
-    playing = false;
+}
+function showHomeMenu(){
+    $('#tetris').toggleClass('hide');
+    $('#home').toggleClass('hide');
+}
+
+function showHighscore(){
+    $('#highscore').toggleClass('hide');
+    $('#home').toggleClass('hide');
 }
 
 function setVisualScore(n) {
@@ -518,6 +525,7 @@ function drop() {
         clearActions();
         if (occupied(current.type, current.x, current.y, current.dir)) {
             lose();
+            showLoseMenu();
         }
     }
 }
