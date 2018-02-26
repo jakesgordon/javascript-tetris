@@ -62,7 +62,7 @@ var KEY = {
     ucanvas = get('upcoming'),
     uctx = ucanvas.getContext('2d'),
     speed = {
-        start: 0.6, // vitesse de départ des blocs
+        start: levels[indice].speed, // vitesse de départ des blocs
         decrement: 0.005, // a chaque fois que le joueur detruit une row
         // le jeu s'accélere de speed.start - (speed.decrement * row)
         min: 0.1 // vitesse maximum des blocs
@@ -242,9 +242,30 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
-    document.getElementById("play").addEventListener("click", function () {
+    document.getElementById("play").addEventListener("click", function(){
+        $('#tetris').toggleClass('hide');
+        $('#home').toggleClass('hide');
         play();
     });
+
+    $('#highscore-link').click(function() {
+        $('#highscore').toggleClass('hide');
+        $('#home').toggleClass('hide');
+        
+      });
+      
+    $('#back-home').click(function() {
+        $('#highscore').toggleClass('hide');
+        $('#home').toggleClass('hide');
+        
+      });
+
+            
+    $('#highscore').click(function() {
+        $('#highscore').toggleClass('hide');
+        $('#home').toggleClass('hide');
+        
+      });
     document.getElementById("reprendre").addEventListener("click", function () {
         resume();
     });
@@ -303,7 +324,11 @@ function keydown(ev) {
 // LOGIC
 // -------------------------------------------------------------------------
 
+function setSpeed(){
+    speed.start = levels[indice].speed;
+}
 function play() {
+    setSpeed();
     hide('play');
     reset();
     playing = true;
