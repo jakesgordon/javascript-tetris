@@ -1,3 +1,7 @@
+h1{
+    margin: 0;
+    padding: 0;
+}
 body {
     font-family: Helvetica, sans-serif;
 }
@@ -76,16 +80,22 @@ button:hover{
     top: 25%;
     left: 37vw;
     z-index: 1000000;
+    font-family: 'Roboto', sans-serif;
 }
-.modal h1{
-    margin-top: 100px; 
-    text-align: center;
+.wrapper{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr 1fr;
 }
-.modal p{
-    margin-top: 70px;
-    margin-left: 100px; 
+.wrapper h1{
+    align-self: center;
+    justify-self: center;
 }
-
+.wrapper > div{
+    justify-self: center;
+}
 #score {
     color: red;
     font-weight: bold;
