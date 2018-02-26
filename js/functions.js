@@ -242,7 +242,7 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
-    document.getElementById("play").addEventListener("click", function(){
+    $('#play').click(function(){
         $('#tetris').toggleClass('hide');
         $('#home').toggleClass('hide');
         play();
@@ -251,28 +251,38 @@ function addEvents() {
     $('#highscore-link').click(function() {
         $('#highscore').toggleClass('hide');
         $('#home').toggleClass('hide');
-        
-      });
+    });
       
     $('#back-home').click(function() {
         $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');
-        
-      });
+        $('#home').toggleClass('hide');  
+    });
 
             
     $('#highscore').click(function() {
         $('#highscore').toggleClass('hide');
         $('#home').toggleClass('hide');
-        
-      });
-    document.getElementById("reprendre").addEventListener("click", function () {
+    });
+
+    $("#reprendre").click(function () {
         resume();
     });
-    document.getElementById("abandonner").addEventListener("click", function () {
+    $("#abandonner").click(function () {
         resume();
         lose();
     });
+    $("#retourMenu").click(function () {
+        $( "#menuLose" ).fadeOut( "fast", function() {
+            $('#tetris').toggleClass('hide');
+            $('#home').toggleClass('hide');
+        });
+    });
+    $("#recommencer").click(function () {
+        $( "#menuLose" ).fadeOut( "fast", function() {
+            play();
+        });
+    });
+
 }
 
 function resize(event) {
@@ -329,7 +339,6 @@ function setSpeed(){
 }
 function play() {
     setSpeed();
-    hide('play');
     reset();
     playing = true;
 }
@@ -337,13 +346,13 @@ function play() {
 // fonction pause
 function resume() {
     if (pause) {
-        $( "#menuPause" ).fadeOut( "fast", function() {
+        $( "#menuResume" ).fadeOut( "fast", function() {
             // Animation complete
         });
         pause = false;
     } else {
 
-        $( "#menuPause" ).fadeIn( "fast", function() {
+        $( "#menuResume" ).fadeIn( "fast", function() {
             // Animation complete
         });
         pause = true;
@@ -351,8 +360,11 @@ function resume() {
 }
 
 function lose() {
-    show('play');
     setVisualScore();
+    $( "#menuLose" ).fadeIn( "fast", function() {
+        // Animation complete
+    });
+    pause = false;
     playing = false;
 }
 

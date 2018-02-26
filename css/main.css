@@ -68,7 +68,7 @@ button:hover{
     margin: 0 auto;
     background-color: #E0E0E0;
 }
-#menuPause{
+.modal{
     width: 450px;
     height: 400px;
     background-color: rgba(237, 231, 246, 0.9);
@@ -77,11 +77,11 @@ button:hover{
     left: 37vw;
     z-index: 1000000;
 }
-#menuPause h1{
+.modal h1{
     margin-top: 100px; 
     text-align: center;
 }
-#menuPause p{
+.modal p{
     margin-top: 70px;
     margin-left: 100px; 
 }
@@ -128,7 +128,10 @@ button:hover{
 #play,#prec,#suiv,#highscore-link, #back-home {
     cursor : pointer;
 }
-
-.show{
-    display: block;
+#fleche,#contour{
+    stroke-width: 2px;
+}
+#retourMenu:hover #fleche,#retourMenu:hover #contour {
+    fill: white;
+    stroke: white;
 }
