@@ -97,8 +97,8 @@ var dx,
 // set of blocks, e.g. j.blocks[0] = 0x44C0
 //
 //             0100 = 0x4 << 3 = 0x4000             0100 = 0x4 << 2 = 0x0400
-//     1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000
-//           ------                               0x44C0
+// 1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000 ------
+//                      0x44C0
 //
 //-------------------------------------------------------------------------
 
@@ -361,8 +361,6 @@ function lose() {
     show('play');
     setVisualScore();
     playing = false;
-    scookie('tonio',233,330);
-    alert(gcookie('tonio'));
 }
 
 function setVisualScore(n) {

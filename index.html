@@ -3,8 +3,8 @@
 
 <head>
   <title>Javascript Tetris</title>
-  <link rel="stylesheet" href="css/main.css"/>
-  <link rel="stylesheet" href="css/media.css"/>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/media.css" />
   <link href="css/hover-min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -26,6 +26,7 @@
         <div id="highscore-link">High Score</div>
       </div>
 
+      <a onClick="$('#save-score').toggleClass('hide');"> TEST</a>
     </div>
   </div>
 
@@ -33,20 +34,26 @@
 
 
   <div id="menuPause" class="hide">
-      <h1>TETRIS</h1>
+    <h1>TETRIS</h1>
     <p>
       <button id="reprendre" class="hvr-sweep-to-right">Reprendre</button>
       <button id="abandonner" class="hvr-sweep-to-left">Abandonner</button>
     </p>
-    
+
 
   </div>
 
   <div id="tetris">
     <div id="menu">
-      <p><canvas id="upcoming"></canvas></p>
-      <p>score <span id="score">00000</span></p>
-      <p>rows <span id="rows">0</span></p>
+      <p>
+        <canvas id="upcoming"></canvas>
+      </p>
+      <p>score
+        <span id="score">00000</span>
+      </p>
+      <p>rows
+        <span id="rows">0</span>
+      </p>
     </div>
     <canvas id="canvas">
       Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
@@ -54,8 +61,9 @@
   </div>
 
 
-  <div id="highscore">
+  <div id="highscore" class="hide">
     <h1>High Score</h1>
+    <div id="highscore-cookie"></div>
     ... ....... ....
     <br/> ... ....... ....
     <br/> ... ....... ....
@@ -66,7 +74,19 @@
     <br/>
   </div>
 
+  <div id="save-score">
 
+      <input type="text" name="scorePlayer" id="scorePlayer"/>
+      <button onClick="saveScore();"></button>
+
+  </div>
+
+  <script type="text/javascript">
+function saveScore(){
+//     alert(document.getElementById('scorePlayer').value);
+    createCookie(document.getElementById('scorePlayer').value,score,365);
+}
+  </script>
   <script src="js/stats.js"></script>
   <script src="js/functionsFlo.js"></script>
   <script src="js/functions.js"></script>
