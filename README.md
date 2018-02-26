@@ -31,6 +31,7 @@ TÂCHES
 * 8 - Restylisé l'interface : 
     * 8.1 - changer couleur bloc
     * 8.2 - changer css page de jeu
+* 9 - faire le responsive design du tétris
 
 License
 =======
