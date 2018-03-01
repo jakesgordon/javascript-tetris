@@ -63,29 +63,28 @@
 
   <div id="highscore" class="hide">
     <h1>High Score</h1>
+    <div id="back-home"> < </div>
     <div id="highscore-cookie"></div>
-    ... ....... ....
-    <br/> ... ....... ....
-    <br/> ... ....... ....
-    <br/> ... ....... ....
-    <br/> ... ....... ....
-    <br/> ... ....... ....
-    <br/> ... ....... ....
-    <br/>
+    <button onclick="resetCookie();">Reset</button>
   </div>
 
   <div id="save-score">
 
-      <input type="text" name="scorePlayer" id="scorePlayer"/>
-      <button onClick="saveScore();"></button>
+    <input type="text" name="scorePlayer" id="scorePlayer" />
+    <button onClick="saveScore();">Save</button>
 
   </div>
 
   <script type="text/javascript">
-function saveScore(){
-//     alert(document.getElementById('scorePlayer').value);
-    createCookie(document.getElementById('scorePlayer').value,score,365);
-}
+    function saveScore() {
+      createCookie('NamePlayer',document.getElementById('scorePlayer').value, 365);
+      createCookie('ScorePlayer', score, 365);
+    }
+
+    function resetCookie(){
+      eraseCookieFromAllPaths('NamePlayer');
+      eraseCookieFromAllPaths('ScorePlayer');
+    }
   </script>
   <script src="js/stats.js"></script>
   <script src="js/functionsFlo.js"></script>

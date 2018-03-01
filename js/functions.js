@@ -274,10 +274,6 @@ function addEvents() {
 
     });
 
-    $('#highscore').click(function () {
-        $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');
-    });
 }
 
 function resize(event) {

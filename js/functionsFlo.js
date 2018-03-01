@@ -19,11 +19,40 @@ var levels = [slow, normal, fast, insane];
 
 var indice = 1;
 
+var score1 = {
+  name: 'Dadju',
+  score: 4543
+}
+var score2 = {
+  name: 'Lartiste',
+  score: 3245
+}
+var score3 = {
+  name: 'RedHot',
+  score: 1320
+}
+var score4 = {
+  name: 'Bester',
+  score: 834
+}
+var score5 = {
+  name: 'Stikar',
+  score: 548
+}
+
+var tabScore = [score2, score4, score3, score1, score5];
+
 function chargerPage() {
   $('#tetris').addClass('hide');
 
   level(indice);
-  $('#highscore-cookie').html(document.cookie[1]);
+
+  if (getHighScorePlayer() != "") {
+    tabScore.push(getHighScorePlayer());
+  }
+
+  $('#highscore-cookie').html(getHighScore());
+
 }
 
 function prec() {
@@ -61,13 +90,46 @@ function getScore() {
   return score;
 }
 
+function getHighScorePlayer() {
+
+  if (getCookie('NamePlayer') && getCookie('ScorePlayer')) {
+    return scorePlayer = {
+      name: getCookie('NamePlayer'),
+      score: getCookie('ScorePlayer')
+    }
+  } else {
+    return "";
+  }
+}
+
+function getHighScore() {
+  for (var i = 0; i < tabScore.length; i++) {
+    var j = i + 1;
+    var a = tabScore[i].score;
+    var b = tabScore[j].score;
+    while (a > b) {
+      temp = tabScore[i];
+      tabScore[i] = tabScore[j];
+      tabScore[j] = temp;
+      j++;
+    }
+  }
+
+  var listeScore = "";
+  for (var i = 0; i < tabScore.length; i++) {
+   listeScore += tabScore[i].name + " : " + tabScore[i].score + "<br>";
+  }
+
+  return listeScore;
+}
+
 function createCookie(nom, valeur, jours) {
   // Le nombre de jours est spécifié
   if (jours) {
     var date = new Date();
     // Converti le nombre de jour en millisecondes
     date.setTime(date.getTime() + (jours * 24 * 60 * 60 * 1000));
-    var expire = "; expire=" + date.toGMTString(// Aucune valeur de jours spécifiée
+    var expire = "; expire=" + date.toGMTString( // Aucune valeur de jours spécifiée
     );
   } else 
     var expire = "";
@@ -88,7 +150,7 @@ function getCookie(nom) {
       a = a.substring(1, a.length);
     }
     if (a.indexOf(nom2) == 0) {
-      return nom + " : " + a.substring(nom2.length, a.length);
+      return a.substring(nom2.length, a.length);
     }
   }
   // Aucun cookie trouvé
@@ -100,14 +162,18 @@ function eraseCookie(name) {
 }
 function eraseCookieFromAllPaths(name) {
   // This function will attempt to remove a cookie from all paths.
-  var pathBits = location.pathname.split('/');
+  var pathBits = location
+    .pathname
+    .split('/');
   var pathCurrent = ' path=';
 
   // do a simple pathless delete first.
   document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
 
   for (var i = 0; i < pathBits.length; i++) {
-      pathCurrent += ((pathCurrent.substr(-1) != '/') ? '/' : '') + pathBits[i];
-      document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
+    pathCurrent += ((pathCurrent.substr(-1) != '/')
+      ? '/'
+      : '') + pathBits[i];
+    document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
   }
 }
