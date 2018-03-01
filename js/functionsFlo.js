@@ -102,22 +102,27 @@ function getHighScorePlayer() {
   }
 }
 
+
 function getHighScore() {
-  for (var i = 0; i < tabScore.length; i++) {
-    var j = i + 1;
-    var a = tabScore[i].score;
-    var b = tabScore[j].score;
-    while (a > b) {
-      temp = tabScore[i];
-      tabScore[i] = tabScore[j];
-      tabScore[j] = temp;
-      j++;
+
+  var tab_en_ordre = false;
+  var taille = tabScore.length;
+  while (!tab_en_ordre) {
+    tab_en_ordre = true;
+    for (var i = 0; i < taille - 1; i++) {
+      if (tabScore[i].score < tabScore[i + 1].score) {
+        temp = tabScore[i]; 
+        tabScore[i] = tabScore[i+1];     
+        tabScore[i+1] = temp;  
+        tab_en_ordre = false;
+      }
     }
+    taille--;
   }
 
   var listeScore = "";
   for (var i = 0; i < tabScore.length; i++) {
-   listeScore += tabScore[i].name + " : " + tabScore[i].score + "<br>";
+    listeScore += tabScore[i].name + " : " + tabScore[i].score + "<br>";
   }
 
   return listeScore;
