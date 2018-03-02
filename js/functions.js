@@ -274,7 +274,42 @@ function addEvents() {
 
     });
 
+    $("#reprendre").click(function () {
+        resume();
+    });
+    $("#abandonner").click(function () {
+        resume();
+        lose();
+        showHomeMenu();
+    });
+    $("#retourMenu").click(function () {
+        $( "#menuLose" ).fadeOut( "fast", function() {
+            $('#tetris').toggleClass('hide');
+            $('#home').toggleClass('hide');
+        });
+    });
+    $("#recommencer").click(function () {
+        $( "#menuLose" ).fadeOut( "fast", function() {
+            play();
+        });
+    });
 }
+
+function showLoseMenu(){
+    $( "#menuLose" ).fadeIn( "fast", function() {
+        // Animation complete
+    });
+}
+function showHomeMenu(){
+    $('#tetris').toggleClass('hide');
+    $('#home').toggleClass('hide');
+}
+
+function showHighscore(){
+    $('#highscore').toggleClass('hide');
+    $('#home').toggleClass('hide');
+}
+
 
 function resize(event) {
     canvas.width = canvas.clientWidth; // set canvas logical size equal to its physical size
