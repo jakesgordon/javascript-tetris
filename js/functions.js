@@ -97,8 +97,8 @@ var dx,
 // set of blocks, e.g. j.blocks[0] = 0x44C0
 //
 //             0100 = 0x4 << 3 = 0x4000             0100 = 0x4 << 2 = 0x0400
-// 1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000 ------
-//                      0x44C0
+//     1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000
+//           ------                               0x44C0
 //
 //-------------------------------------------------------------------------
 
@@ -243,35 +243,18 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
-    document
-        .getElementById("play")
-        .addEventListener("click", function () {
-            $('#tetris').toggleClass('hide');
-            $('#home').toggleClass('hide');
-            play();
-        });
-    document
-        .getElementById("reprendre")
-        .addEventListener("click", function () {
-            resume();
-        });
-    document
-        .getElementById("abandonner")
-        .addEventListener("click", function () {
-            resume();
-            lose();
-        });
+
+    $('#play').click(function () {
+        showHomeMenu();
+        play();
+    });
 
     $('#highscore-link').click(function () {
-        $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');
-
+        showHighscore();
     });
 
     $('#back-home').click(function () {
-        $('#highscore').toggleClass('hide');
-        $('#home').toggleClass('hide');
-
+        showHighscore();
     });
 
     $("#reprendre").click(function () {
@@ -281,35 +264,22 @@ function addEvents() {
         resume();
         lose();
         showHomeMenu();
-    });
+    })
     $("#retourMenu").click(function () {
-        $( "#menuLose" ).fadeOut( "fast", function() {
-            $('#tetris').toggleClass('hide');
-            $('#home').toggleClass('hide');
-        });
+        $("#menuLose")
+            .fadeOut("fast", function () {
+                $('#tetris').toggleClass('hide');
+                $('#home').toggleClass('hide');
+            });
     });
     $("#recommencer").click(function () {
-        $( "#menuLose" ).fadeOut( "fast", function() {
-            play();
-        });
+        $("#menuLose")
+            .fadeOut("fast", function () {
+                play();
+            });
     });
-}
 
-function showLoseMenu(){
-    $( "#menuLose" ).fadeIn( "fast", function() {
-        // Animation complete
-    });
 }
-function showHomeMenu(){
-    $('#tetris').toggleClass('hide');
-    $('#home').toggleClass('hide');
-}
-
-function showHighscore(){
-    $('#highscore').toggleClass('hide');
-    $('#home').toggleClass('hide');
-}
-
 
 function resize(event) {
     canvas.width = canvas.clientWidth; // set canvas logical size equal to its physical size
@@ -365,7 +335,6 @@ function setSpeed() {
 }
 function play() {
     setSpeed();
-    hide('play');
     reset();
     playing = true;
 }
@@ -373,14 +342,13 @@ function play() {
 // fonction pause
 function resume() {
     if (pause) {
-        $("#menuPause")
+        $("#menuResume")
             .fadeOut("fast", function () {
                 // Animation complete
             });
         pause = false;
     } else {
-
-        $("#menuPause")
+        $("#menuResume")
             .fadeIn("fast", function () {
                 // Animation complete
             });
@@ -389,9 +357,34 @@ function resume() {
 }
 
 function lose() {
-    show('play');
+
+    if(getHighScorePlayer().score > score){
+        $('#save-score').addClass('hide');
+    }
+    else{
+        $('#save-score').removeClass('hide');
+    }
+    $('#score-player').html(score);
+    alert();
     setVisualScore();
+    pause = false;
     playing = false;
+}
+
+function showLoseMenu() {
+    $("#menuLose")
+        .fadeIn("fast", function () {
+            // Animation complete
+        });
+}
+function showHomeMenu() {
+    $('#tetris').toggleClass('hide');
+    $('#home').toggleClass('hide');
+}
+
+function showHighscore() {
+    $('#highscore').toggleClass('hide');
+    $('#home').toggleClass('hide');
 }
 
 function setVisualScore(n) {
@@ -544,6 +537,7 @@ function drop() {
         clearActions();
         if (occupied(current.type, current.x, current.y, current.dir)) {
             lose();
+            showLoseMenu();
         }
     }
 }

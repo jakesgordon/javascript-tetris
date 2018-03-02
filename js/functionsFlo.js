@@ -49,13 +49,15 @@ function chargerPage() {
 
   if (getHighScorePlayer() != "") {
     tabScore.push(getHighScorePlayer());
-    document.getElementById('scorePlayer').value = getCookie('NamePlayer');
+    document
+      .getElementById('scorePlayer')
+      .value = getCookie('NamePlayer');
   }
 
   $('#highscore-cookie').html(getHighScore());
 
+  $('#highscore-player').html(getHighScorePlayer().score);
   
-
 }
 
 function prec() {
@@ -105,7 +107,6 @@ function getHighScorePlayer() {
   }
 }
 
-
 function getHighScore() {
 
   var tab_en_ordre = false;
@@ -114,9 +115,9 @@ function getHighScore() {
     tab_en_ordre = true;
     for (var i = 0; i < taille - 1; i++) {
       if (tabScore[i].score < tabScore[i + 1].score) {
-        temp = tabScore[i]; 
-        tabScore[i] = tabScore[i+1];     
-        tabScore[i+1] = temp;  
+        temp = tabScore[i];
+        tabScore[i] = tabScore[i + 1];
+        tabScore[i + 1] = temp;
         tab_en_ordre = false;
       }
     }
@@ -184,4 +185,16 @@ function eraseCookieFromAllPaths(name) {
       : '') + pathBits[i];
     document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
   }
+}
+
+function saveScore() {
+  createCookie('NamePlayer', document.getElementById('scorePlayer').value, 365);
+  createCookie('ScorePlayer', score, 365);
+}
+
+function resetCookie() {
+  eraseCookieFromAllPaths('NamePlayer');
+  eraseCookieFromAllPaths('ScorePlayer');
+  createCookie('Reset', true, 365);
+  location.reload();
 }

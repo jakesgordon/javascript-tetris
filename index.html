@@ -3,6 +3,7 @@
 
 <head>
   <title>Javascript Tetris</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/media.css" />
   <link href="css/hover-min.css" rel="stylesheet">
@@ -25,19 +26,37 @@
         </div>
         <div id="highscore-link">High Score</div>
       </div>
+
     </div>
   </div>
 
+  <div id="menuResume" class="hide modal">
+    <div class="wrapper">
+      <h1>PAUSE</h1>
+      <div>
+        <button id="reprendre" class="hvr-sweep-to-right">CONTINUE</button>
+        <button id="abandonner" class="hvr-sweep-to-left">QUIT</button>
+      </div>
+    </div>
+  </div>
 
-
-
-  <div id="menuPause" class="hide">
-    <h1>TETRIS</h1>
-    <p>
-      <button id="reprendre" class="hvr-sweep-to-right">Reprendre</button>
-      <button id="abandonner" class="hvr-sweep-to-left">Abandonner</button>
-    </p>
-
+  <div id="menuLose" class="hide modal">
+    <div class="wrapper">
+      <h1>TRY AGAIN?</h1>
+      <div>
+        <button id="retourMenu" class="hvr-sweep-to-right">BACK MENU</button>
+        <button id="recommencer" class="hvr-sweep-to-left">RESTART</button>
+        <p>
+        Your score : <span id="score-player"></span>
+        </p>
+        <div id="save-score">
+          <form>
+            <input type="text" name="scorePlayer" id="scorePlayer" placeholder="Pseudo" />
+            <input type="submit" onClick="saveScore();" value="Save" />
+          </form>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -46,10 +65,13 @@
       <p>
         <canvas id="upcoming"></canvas>
       </p>
-      <p>score
+      <p>HighScore
+          <span id="highscore-player">00000</span>
+        </p>
+      <p>Score
         <span id="score">00000</span>
       </p>
-      <p>rows
+      <p>Rows
         <span id="rows">0</span>
       </p>
     </div>
@@ -59,33 +81,15 @@
   </div>
 
 
+
   <div id="highscore" class="hide">
     <h1>High Score</h1>
-    <div id="back-home"> < </div>
-    <div id="highscore-cookie"></div>
-    <button onclick="resetCookie();">Reset</button>
+    <div id="back-home">
+      < </div>
+        <div id="highscore-cookie"></div>
+        <button onclick="resetCookie();">Reset</button>
+    </div>
   </div>
-
-  <div id="save-score">
-    <form>
-    <input type="text" name="scorePlayer" id="scorePlayer" placeholder="Pseudo" />
-    <input type="submit" onClick="saveScore();" value="Save"/>
-    </form>
-  </div>
-
-  <script type="text/javascript">
-    function saveScore() {
-      createCookie('NamePlayer',document.getElementById('scorePlayer').value, 365);
-      createCookie('ScorePlayer', score, 365);
-    }
-
-    function resetCookie(){
-      eraseCookieFromAllPaths('NamePlayer');
-      eraseCookieFromAllPaths('ScorePlayer');
-      createCookie('Reset',true, 365);
-      location.reload();
-    }
-  </script>
   <script src="js/stats.js"></script>
   <script src="js/functionsFlo.js"></script>
   <script src="js/functions.js"></script>
