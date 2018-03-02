@@ -69,10 +69,10 @@
   </div>
 
   <div id="save-score">
-
-    <input type="text" name="scorePlayer" id="scorePlayer" />
-    <button onClick="saveScore();">Save</button>
-
+    <form>
+    <input type="text" name="scorePlayer" id="scorePlayer" placeholder="Pseudo" />
+    <input type="submit" onClick="saveScore();" value="Save"/>
+    </form>
   </div>
 
   <script type="text/javascript">
@@ -84,6 +84,8 @@
     function resetCookie(){
       eraseCookieFromAllPaths('NamePlayer');
       eraseCookieFromAllPaths('ScorePlayer');
+      createCookie('Reset',true, 365);
+      location.reload();
     }
   </script>
   <script src="js/stats.js"></script>

@@ -49,9 +49,12 @@ function chargerPage() {
 
   if (getHighScorePlayer() != "") {
     tabScore.push(getHighScorePlayer());
+    document.getElementById('scorePlayer').value = getCookie('NamePlayer');
   }
 
   $('#highscore-cookie').html(getHighScore());
+
+  
 
 }
 
