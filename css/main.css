@@ -1,9 +1,16 @@
-h1{
+h1 {
     margin: 0;
     padding: 0;
 }
+
 body {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+*:hover{
+    transition:0.3s!important;
 }
 
 a,
@@ -104,6 +111,7 @@ button:hover {
 .wrapper>div {
     justify-self: center;
 }
+
 #score {
     color: red;
     font-weight: bold;
@@ -136,11 +144,12 @@ button:hover {
 }
 
 #home {
-    border: 1px solid;
+    /* border: 1px solid; */
     text-align: center;
+    height: 80%;
 }
 
-#home>h1 {
+#home>h1,a {
     text-transform: uppercase;
 }
 
@@ -161,4 +170,65 @@ button:hover {
 #retourMenu:hover #contour {
     fill: white;
     stroke: white;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+    /* grid-gap: 10px; */
+    
+    /* padding: 10px;   */
+    height: 100vh;
+}
+
+.item1 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    align-self: center;
+    height: 83vh;
+    background-color: #74b9ff;
+    border-radius:10px;
+}
+
+.titre {
+    text-align: center;
+    padding-top:0.5em;
+    font-size: 5em;
+    /* border: 1px solid red; */
+    color:#375778;
+    font-weight: 800;
+    padding-bottom: 25px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.781);
+    text-transform: uppercase;
+}
+
+.home-link {
+    font-size: 3em;
+    /* border: 4px solid green; */
+    height: 100%;
+    line-height: 2.3em;
+    display: flex;
+    /* contexte sur le parent */
+    flex-direction: column;
+    /* direction d'affichage verticale */
+    justify-content: center;
+    /* alignement vertical */
+    color:#fff;
+}
+
+.home-link > a:hover, .prec:hover, .suiv:hover, i:hover{
+    color: #1d2e40 !important;;
+}
+
+.choice{
+    /* border: 4px solid green; */
+    width:4.5em;
+    display: inline-block;
+}
+
+.hide-opacity{
+    opacity: 0;
 }

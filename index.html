@@ -7,28 +7,71 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/media.css" />
   <link href="css/hover-min.css" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body onload="chargerPage();">
 
   <div class="container">
-    <div id="home">
-      <h1>Tetris In JavaScript</h1>
+    <div class="item1">
 
-      <div class="home-link">
-        <div id="play">New Game</div>
-        <div>
-          <span class="prec" onClick="prec();">
-            < </span>
-              <span class="choice"></span>
-              <span class="suiv" onClick="suiv();"> > </span>
+      <div id="home">
+        <h1 class="titre">Tetris In JavaScript</h1>
+
+        <div class="home-link">
+          <a id="play">New Game</a>
+          <div>
+            <a class="prec" onClick="prec();">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="choice"></div>
+            <a class="suiv" onClick="suiv();">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+          <a id="highscore-link">High Score</a>
         </div>
-        <div id="highscore-link">High Score</div>
       </div>
+      <!--/home -->
+
+      <div id="tetris">
+        <div id="menu">
+          <p>
+            <canvas id="upcoming"></canvas>
+          </p>
+          <p>HighScore
+            <span id="highscore-player">00000</span>
+          </p>
+          <p>Score
+            <span id="score">00000</span>
+          </p>
+          <p>Rows
+            <span id="rows">0</span>
+          </p>
+        </div>
+        <canvas id="canvas">
+          Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+        </canvas>
+      </div>
+      <!--/tetris -->
+
+      <div id="highscore" class="hide">
+        <h1 class="titre">High Score</h1>
+        <div id="back-home">
+          < </div>
+            <div id="highscore-cookie"></div>
+            <button onclick="resetCookie();">Reset</button>
+        </div>
+      </div>
+      <!--/highscore -->
+
+
 
     </div>
+    <!--/item1 -->
   </div>
+  <!--/container -->
 
   <div id="menuResume" class="hide modal">
     <div class="wrapper">
@@ -47,7 +90,8 @@
         <button id="retourMenu" class="hvr-sweep-to-right">BACK MENU</button>
         <button id="recommencer" class="hvr-sweep-to-left">RESTART</button>
         <p>
-        Your score : <span id="score-player"></span>
+          Your score :
+          <span id="score-player"></span>
         </p>
         <div id="save-score">
           <form>
@@ -60,36 +104,11 @@
 
   </div>
 
-  <div id="tetris">
-    <div id="menu">
-      <p>
-        <canvas id="upcoming"></canvas>
-      </p>
-      <p>HighScore
-          <span id="highscore-player">00000</span>
-        </p>
-      <p>Score
-        <span id="score">00000</span>
-      </p>
-      <p>Rows
-        <span id="rows">0</span>
-      </p>
-    </div>
-    <canvas id="canvas">
-      Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
-    </canvas>
-  </div>
 
 
 
-  <div id="highscore" class="hide">
-    <h1>High Score</h1>
-    <div id="back-home">
-      < </div>
-        <div id="highscore-cookie"></div>
-        <button onclick="resetCookie();">Reset</button>
-    </div>
-  </div>
+
+
   <script src="js/stats.js"></script>
   <script src="js/functionsFlo.js"></script>
   <script src="js/functions.js"></script>

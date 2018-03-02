@@ -45,7 +45,7 @@ var tabScore = [score2, score4, score3, score1, score5];
 function chargerPage() {
   $('#tetris').addClass('hide');
 
-  level(indice);
+  $('.choice').html(levels[indice].name);
 
   if (getHighScorePlayer() != "") {
     tabScore.push(getHighScorePlayer());
@@ -77,18 +77,20 @@ function suiv() {
 
 function level(i) {
   if (indice == 0) {
-    $('.prec').addClass('hide');
+    $('.prec').addClass('hide-opacity');
   } else {
-    $('.prec').removeClass('hide');
+    $('.prec').removeClass('hide-opacity');
   }
 
   if (indice == levels.length - 1) {
-    $('.suiv').addClass('hide');
+    $('.suiv').addClass('hide-opacity');
   } else {
-    $('.suiv').removeClass('hide');
+    $('.suiv').removeClass('hide-opacity');
   }
 
-  $('.choice').html(levels[i].name);
+  $('.choice').fadeOut(function() {
+    $(this).text(levels[i].name).fadeIn(10);
+  });
 }
 
 function getScore() {
