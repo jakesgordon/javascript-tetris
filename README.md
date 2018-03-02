@@ -21,17 +21,17 @@ FUTURE
 
 TÂCHES
 ======
-* 1 - Page Menu avec "Play game" / "Levels" / "high score" ~ FLORENT
-* 2 - affichage de fin de partie (proposition rejouer / retour menu) ~ GAB
-* 3 - fonctionnalité Play Game ~ GAB
-* 4 - fonctionnalité Levels ~ FLORENT
-* 5 - Page High Score qui affiche les HighScores enregistrés en cookie avec option reset ~ FLORENT
+* 1 - affichage de fin de partie (proposition rejouer / retour menu) ~ GAB ~ DONE
+* 2 - Page Menu avec "Play game" / "Levels" / "high score" ~ FLORENT ~ DONE
+* 3 - fonctionnalité Play Game ~ GAB ~ DONE
+* 4 - fonctionnalité Levels ~ FLORENT ~ DONE
+* 5 - Page High Score qui affiche les HighScores enregistrés en cookie avec option reset ~ FLORENT ~ DONE
 * 6 - fonctionnalité de musique de fond avec bouton lancer/couper 
-* 7 - fonctionnalité pause ~ GAB
+* 7 - fonctionnalité pause ~ GAB ~ DONE
 * 8 - Restylisé l'interface : 
     * 8.1 - changer couleur bloc
     * 8.2 - changer css page de jeu
-* 9 - faire le responsive design du tétris
+* 9 - faire le responsive design du jeu
 
 License
 =======

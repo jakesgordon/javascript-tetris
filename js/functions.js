@@ -364,8 +364,7 @@ function lose() {
     else{
         $('#save-score').removeClass('hide');
     }
-    $('#score-player').html(score);
-    alert();
+    $('#score-player').html(score);    
     setVisualScore();
     pause = false;
     playing = false;
