@@ -44,6 +44,7 @@ var tabScore = [score2, score4, score3, score1, score5];
 
 function chargerPage() {
   $('#tetris').addClass('hide');
+  
 
   $('.choice').html(levels[indice].name);
 
@@ -77,15 +78,15 @@ function suiv() {
 
 function level(i) {
   if (indice == 0) {
-    $('.prec').addClass('hide-opacity');
+    $('.prec').addClass('hide');
   } else {
-    $('.prec').removeClass('hide-opacity');
+    $('.prec').removeClass('hide');
   }
 
   if (indice == levels.length - 1) {
-    $('.suiv').addClass('hide-opacity');
+    $('.suiv').addClass('hide');
   } else {
-    $('.suiv').removeClass('hide-opacity');
+    $('.suiv').removeClass('hide');
   }
 
   $('.choice').fadeOut(function() {

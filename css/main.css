@@ -42,11 +42,13 @@ button:hover {
 }
 
 #tetris {
-    margin: 1em auto;
+    /* margin: 1em auto;
     padding: 1em;
     border: 4px solid black;
-    border-radius: 10px;
-    background-color: #F8F8F8;
+    border-radius: 10px; */
+    /* background-color: #F8F8F8; */
+
+    
 }
 
 #stats {
@@ -55,11 +57,13 @@ button:hover {
 }
 
 #canvas {
-    display: inline-block;
-    vertical-align: top;
-    background: url(../img/texture.jpg);
-    box-shadow: 10px 10px 10px #999;
-    border: 2px solid #333;
+    /* display: inline-block; */
+    /* vertical-align: top; */
+    background:#fff;
+    /* box-shadow: 10px 10px 10px #999; */
+    width: 35vh!important;
+    height: 70vh!important;
+
 }
 
 #menu {
@@ -69,8 +73,10 @@ button:hover {
 }
 
 #menu p {
-    margin: 0.5em 0;
+    margin: 1em 0;
     text-align: center;
+    color:#fff;
+    font-size: 35px;
 }
 
 #menu p a {
@@ -81,7 +87,7 @@ button:hover {
 #upcoming {
     display: block;
     margin: 0 auto;
-    background-color: #E0E0E0;
+    background-color: #fff;
 }
 
 .modal {
@@ -93,6 +99,7 @@ button:hover {
     left: 37vw;
     z-index: 1000000;
     font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 
 .wrapper {
@@ -196,7 +203,7 @@ button:hover {
 .titre {
     text-align: center;
     padding-top:0.5em;
-    font-size: 5em;
+    font-size: 53px;
     /* border: 1px solid red; */
     color:#375778;
     font-weight: 800;
@@ -206,7 +213,7 @@ button:hover {
 }
 
 .home-link {
-    font-size: 3em;
+    font-size: 48px;
     /* border: 4px solid green; */
     height: 100%;
     line-height: 2.3em;
@@ -231,4 +238,30 @@ button:hover {
 
 .hide-opacity{
     opacity: 0;
+}
+
+.tetris-container{
+    display: grid;
+    grid-template-columns: 3fr 6fr ;
+    font-size: 30px;
+    text-align: center;
+    height: 100%;
+}
+
+.tetris-item{
+    text-align: center;
+    align-self: center;
+}
+
+.tetris-item:first-child{
+    border-right: 1px solid rgba(241, 241, 241, 0.8);
+}
+
+
+#highscore-player,#score-player{
+    font-weight: 600;
+}
+
+#score-player, .score-player{
+    font-size: 30px;
 }

@@ -36,23 +36,28 @@
       <!--/home -->
 
       <div id="tetris">
-        <div id="menu">
-          <p>
-            <canvas id="upcoming"></canvas>
-          </p>
-          <p>HighScore
-            <span id="highscore-player">00000</span>
-          </p>
-          <p>Score
-            <span id="score">00000</span>
-          </p>
-          <p>Rows
-            <span id="rows">0</span>
-          </p>
+        <div class="tetris-item">
+          <div id="menu">
+            <p>
+              <canvas id="upcoming"></canvas>
+            </p>
+            <p>HighScore
+              <span id="highscore-player">00000</span>
+            </p>
+            <p>Score
+              <span id="score">00000</span>
+            </p>
+            <p>Rows
+              <span id="rows">0</span>
+            </p>
+          </div>
         </div>
-        <canvas id="canvas">
-          Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
-        </canvas>
+        <div class="tetris-item">
+          <canvas id="canvas" class="jeu">
+            Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+          </canvas>
+        </div>
+          
       </div>
       <!--/tetris -->
 
@@ -89,7 +94,7 @@
       <div>
         <button id="retourMenu" class="hvr-sweep-to-right">BACK MENU</button>
         <button id="recommencer" class="hvr-sweep-to-left">RESTART</button>
-        <p>
+        <p class="score-player">
           Your score :
           <span id="score-player"></span>
         </p>

@@ -107,49 +107,49 @@ var i = {
     blocks: [
         0x0F00, 0x2222, 0x00F0, 0x4444
     ],
-    color: 'cyan'
+    color: '#45aaf2', // cyan
 };
 var j = {
     size: 3,
     blocks: [
         0x44C0, 0x8E00, 0x6440, 0x0E20
     ],
-    color: 'blue'
+    color: '#3867d6'// blue
 };
 var l = {
     size: 3,
     blocks: [
         0x4460, 0x0E80, 0xC440, 0x2E00
     ],
-    color: 'orange'
+    color: '#fd9644' //orange
 };
 var o = {
     size: 2,
     blocks: [
         0xCC00, 0xCC00, 0xCC00, 0xCC00
     ],
-    color: 'yellow'
+    color: '#fed330' //yellow
 };
 var s = {
     size: 3,
     blocks: [
         0x06C0, 0x8C40, 0x6C00, 0x4620
     ],
-    color: 'green'
+    color: '#26de81'//green
 };
 var t = {
     size: 3,
     blocks: [
         0x0E40, 0x4C40, 0x4E00, 0x4640
     ],
-    color: 'purple'
+    color: '#a55eea' //purple
 };
 var z = {
     size: 3,
     blocks: [
         0x0C60, 0x4C80, 0xC600, 0x2640
     ],
-    color: 'red'
+    color: '#fc5c65' //red
 };
 
 // ------------------------------------------------ do the bit manipulation and
@@ -268,8 +268,8 @@ function addEvents() {
     $("#retourMenu").click(function () {
         $("#menuLose")
             .fadeOut("fast", function () {
-                $('#tetris').toggleClass('hide');
-                $('#home').toggleClass('hide');
+                showHomeMenu();
+
             });
     });
     $("#recommencer").click(function () {
@@ -379,6 +379,7 @@ function showLoseMenu() {
 function showHomeMenu() {
     $('#tetris').toggleClass('hide');
     $('#home').toggleClass('hide');
+    $('#tetris').toggleClass('tetris-container');
 }
 
 function showHighscore() {
@@ -605,8 +606,9 @@ function invalidateRows() {
 
 function draw() {
     ctx.save();
-    ctx.lineWidth = 1;
-    ctx.translate(0.5, 0.5); // for crisp 1px black lines
+    ctx.lineWidth = .8;
+    ctx.translate(-0.1, 0.1); // for crisp 1px black lines
+    ctx.strokeStyle="#fff";
     drawCourt();
     drawNext();
     drawScore();
@@ -637,11 +639,12 @@ function drawNext() {
     if (invalid.next) {
         var padding = (nu - next.type.size) / 2; // half-arsed attempt at centering next piece display
         uctx.save();
-        uctx.translate(0.5, 0.5);
+        uctx.translate(1, 1);
+        uctx.strokeStyle="#fff";
         uctx.clearRect(0, 0, nu * dx, nu * dy);
         drawPiece(uctx, next.type, padding, padding, next.dir);
-        uctx.strokeStyle = 'black';
-        uctx.strokeRect(0, 0, nu * dx - 1, nu * dy - 1);
+        uctx.strokeStyle = 'white';
+        uctx.strokeRect(6, 6, nu * dx - 1, nu * dy - 1);
         uctx.restore();
         invalid.next = false;
     }
