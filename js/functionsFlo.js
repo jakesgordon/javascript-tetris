@@ -44,7 +44,6 @@ var tabScore = [score2, score4, score3, score1, score5];
 
 function chargerPage() {
   $('#tetris').addClass('hide');
-  
 
   $('.choice').html(levels[indice].name);
 
@@ -58,7 +57,7 @@ function chargerPage() {
   $('#highscore-cookie').html(getHighScore());
 
   $('#highscore-player').html(getHighScorePlayer().score);
-  
+
 }
 
 function prec() {
@@ -78,20 +77,23 @@ function suiv() {
 
 function level(i) {
   if (indice == 0) {
-    $('.prec').addClass('hide');
+    $('.prec').addClass('hide-opacity');
   } else {
-    $('.prec').removeClass('hide');
+    $('.prec').removeClass('hide-opacity');
   }
 
   if (indice == levels.length - 1) {
-    $('.suiv').addClass('hide');
+    $('.suiv').addClass('hide-opacity');
   } else {
-    $('.suiv').removeClass('hide');
+    $('.suiv').removeClass('hide-opacity');
   }
 
-  $('.choice').fadeOut(function() {
-    $(this).text(levels[i].name).fadeIn(10);
-  });
+  $('.choice')
+    .fadeOut(function () {
+      $(this)
+        .text(levels[i].name)
+        .fadeIn(10);
+    });
 }
 
 function getScore() {
@@ -129,75 +131,79 @@ function getHighScore() {
 
   var listeScore = "";
   for (var i = 0; i < tabScore.length; i++) {
-    listeScore += tabScore[i].name + " : " + tabScore[i].score + "<br>";
+    if (getCookie("NamePlayer") == tabScore[i].name) {
+      listeScore += "<span class='highscore-playercookie'><span class='highscore-playercookie-name'>" + tabScore[i].name + "</span>: <span class='highscore-playercookie-score'>" + tabScore[i].score + "</span></span> <br>";
+    } else {
+    listeScore += "<span class='highscore-player-name'>" + tabScore[i].name + "</span> : <span class='highscore-player-score'>" + tabScore[i].score + "</span> <br>";
   }
+}
 
-  return listeScore;
+return listeScore;
 }
 
 function createCookie(nom, valeur, jours) {
-  // Le nombre de jours est spécifié
-  if (jours) {
-    var date = new Date();
-    // Converti le nombre de jour en millisecondes
-    date.setTime(date.getTime() + (jours * 24 * 60 * 60 * 1000));
-    var expire = "; expire=" + date.toGMTString( // Aucune valeur de jours spécifiée
-    );
-  } else 
-    var expire = "";
-  document.cookie = nom + "=" + valeur + expire + "; path=/";
+// Le nombre de jours est spécifié
+if (jours) {
+  var date = new Date();
+  // Converti le nombre de jour en millisecondes
+  date.setTime(date.getTime() + (jours * 24 * 60 * 60 * 1000));
+  var expire = "; expire=" + date.toGMTString( // Aucune valeur de jours spécifiée
+  );
+} else 
+  var expire = "";
+document.cookie = nom + "=" + valeur + expire + "; path=/";
 }
 function getCookie(nom) {
-  // Ajoute le signe égale virgule au nom pour la recherche
-  var nom2 = nom + "=";
-  // Array contenant tous les cookies
-  var arrCookies = document
-    .cookie
-    .split(';');
-  // Cherche l'array pour le cookie en question
-  for (var i = 0; i < arrCookies.length; i++) {
-    var a = arrCookies[i];
-    // Si c'est un espace, enlever
-    while (a.charAt(0) == ' ') {
-      a = a.substring(1, a.length);
-    }
-    if (a.indexOf(nom2) == 0) {
-      return a.substring(nom2.length, a.length);
-    }
+// Ajoute le signe égale virgule au nom pour la recherche
+var nom2 = nom + "=";
+// Array contenant tous les cookies
+var arrCookies = document
+  .cookie
+  .split(';');
+// Cherche l'array pour le cookie en question
+for (var i = 0; i < arrCookies.length; i++) {
+  var a = arrCookies[i];
+  // Si c'est un espace, enlever
+  while (a.charAt(0) == ' ') {
+    a = a.substring(1, a.length);
   }
-  // Aucun cookie trouvé
-  return null;
+  if (a.indexOf(nom2) == 0) {
+    return a.substring(nom2.length, a.length);
+  }
+}
+// Aucun cookie trouvé
+return null;
 }
 
 function eraseCookie(name) {
-  createCookie(name, "", -1);
+createCookie(name, "", -1);
 }
 function eraseCookieFromAllPaths(name) {
-  // This function will attempt to remove a cookie from all paths.
-  var pathBits = location
-    .pathname
-    .split('/');
-  var pathCurrent = ' path=';
+// This function will attempt to remove a cookie from all paths.
+var pathBits = location
+  .pathname
+  .split('/');
+var pathCurrent = ' path=';
 
-  // do a simple pathless delete first.
-  document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+// do a simple pathless delete first.
+document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
 
-  for (var i = 0; i < pathBits.length; i++) {
-    pathCurrent += ((pathCurrent.substr(-1) != '/')
-      ? '/'
-      : '') + pathBits[i];
-    document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
-  }
+for (var i = 0; i < pathBits.length; i++) {
+  pathCurrent += ((pathCurrent.substr(-1) != '/')
+    ? '/'
+    : '') + pathBits[i];
+  document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
+}
 }
 
 function saveScore() {
-  createCookie('NamePlayer', document.getElementById('scorePlayer').value, 365);
-  createCookie('ScorePlayer', score, 365);
+createCookie('NamePlayer', document.getElementById('scorePlayer').value, 365);
+createCookie('ScorePlayer', score, 365);
 }
 
 function resetCookie() {
-  eraseCookieFromAllPaths('NamePlayer');
-  eraseCookieFromAllPaths('ScorePlayer');
-  createCookie('Reset', true, 365);
-  location.reload();
+eraseCookieFromAllPaths('NamePlayer');
+eraseCookieFromAllPaths('ScorePlayer');
+createCookie('Reset', true, 365);
+location.reload();
 }

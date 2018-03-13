@@ -9,8 +9,8 @@ body {
     padding: 0;
 }
 
-*:hover{
-    transition:0.3s!important;
+*:hover {
+    transition: 0.3s!important;
 }
 
 a,
@@ -47,8 +47,6 @@ button:hover {
     border: 4px solid black;
     border-radius: 10px; */
     /* background-color: #F8F8F8; */
-
-    
 }
 
 #stats {
@@ -59,11 +57,10 @@ button:hover {
 #canvas {
     /* display: inline-block; */
     /* vertical-align: top; */
-    background:#fff;
+    background: #fff;
     /* box-shadow: 10px 10px 10px #999; */
     width: 35vh!important;
     height: 70vh!important;
-
 }
 
 #menu {
@@ -75,7 +72,7 @@ button:hover {
 #menu p {
     margin: 1em 0;
     text-align: center;
-    color:#fff;
+    color: #fff;
     font-size: 35px;
 }
 
@@ -119,6 +116,10 @@ button:hover {
     justify-self: center;
 }
 
+.wrapper button {
+    border-radius: 3px;
+}
+
 #score {
     color: red;
     font-weight: bold;
@@ -150,13 +151,19 @@ button:hover {
     cursor: pointer;
 }
 
+.hide-opacity:hover,
+.hide-opacity:focus {
+    opacity: 0;
+}
+
 #home {
     /* border: 1px solid; */
     text-align: center;
     height: 80%;
 }
 
-#home>h1,a {
+#home>h1,
+a {
     text-transform: uppercase;
 }
 
@@ -184,7 +191,6 @@ button:hover {
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 1fr 3fr 1fr;
     /* grid-gap: 10px; */
-    
     /* padding: 10px;   */
     height: 100vh;
 }
@@ -197,15 +203,15 @@ button:hover {
     align-self: center;
     height: 83vh;
     background-color: #74b9ff;
-    border-radius:10px;
+    border-radius: 3px;
 }
 
 .titre {
     text-align: center;
-    padding-top:0.5em;
+    padding-top: 0.5em;
     font-size: 53px;
     /* border: 1px solid red; */
-    color:#375778;
+    color: #375778;
     font-weight: 800;
     padding-bottom: 25px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.781);
@@ -223,45 +229,123 @@ button:hover {
     /* direction d'affichage verticale */
     justify-content: center;
     /* alignement vertical */
-    color:#fff;
+    color: #fff;
 }
 
-.home-link > a:hover, .prec:hover, .suiv:hover, i:hover{
-    color: #1d2e40 !important;;
+.home-link>a:hover,
+.prec:hover,
+.suiv:hover,
+i:hover {
+    color: #1d2e40 !important;
+    ;
 }
 
-.choice{
+.choice {
     /* border: 4px solid green; */
-    width:4.5em;
+    width: 4.5em;
     display: inline-block;
 }
 
-.hide-opacity{
+.hide-opacity {
     opacity: 0;
+    pointer-events: none;
 }
 
-.tetris-container{
+.tetris-container {
     display: grid;
-    grid-template-columns: 3fr 6fr ;
+    grid-template-columns: 3fr 6fr;
     font-size: 30px;
     text-align: center;
     height: 100%;
 }
 
-.tetris-item{
+.tetris-item {
     text-align: center;
     align-self: center;
 }
 
-.tetris-item:first-child{
+.tetris-item:first-child {
     border-right: 1px solid rgba(241, 241, 241, 0.8);
 }
 
-
-#highscore-player,#score-player{
+#highscore-player,
+#score-player {
     font-weight: 600;
 }
 
-#score-player, .score-player{
+#score-player,
+.score-player {
     font-size: 30px;
+}
+
+input {
+    outline: none;
+}
+
+input[type="text"] {
+    color: #2098D1;
+    padding: 11px 20px;
+    border-radius: 3px;
+    border: 1px solid #2098D1;
+    font-size: 18px;
+}
+
+input[type="text"]:focus {
+    -webkit-box-shadow: 0px -1px 10px 2px rgba(214, 211, 214, 1);
+    -moz-box-shadow: 0px -1px 10px 2px rgba(214, 211, 214, 1);
+    box-shadow: 0px -1px 10px 2px rgba(214, 211, 214, 1)
+}
+
+input[type="submit"], .reset {
+    -webkit-border-radius: 3;
+    -moz-border-radius: 3;
+    border-radius: 3px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    background: #2098D1;
+    padding: 10px 20px 12px 20px;
+    text-decoration: none;
+    border: none;
+    margin-top: 1px;
+}
+
+input[type="submit"]:hover, .reset:hover {
+    background: #3cb0fd;
+    text-decoration: none;
+}
+
+#highscore {
+    text-align: center;
+}
+
+.highscore-list {
+    line-height: 60px;
+    font-size: 30px;
+}
+
+.highscore-player-name{
+    font-weight:600;
+    color:#36424e;
+}
+.highscore-player-score{
+    font-weight:600;
+    color:#fff;
+}
+
+.highscore-playercookie{
+    background: #fff;
+    color:#36424e;
+    padding: 7px 15px; 
+    border-radius: 3px;
+}
+
+.highscore-playercookie-name{
+    font-weight:600;
+
+}
+.highscore-playercookie-score{
+    font-weight:600;
+    color:#e74c3c;
+    /* color:#74b9ff; */
 }

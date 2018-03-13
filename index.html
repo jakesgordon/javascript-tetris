@@ -63,10 +63,12 @@
 
       <div id="highscore" class="hide">
         <h1 class="titre">High Score</h1>
-        <div id="back-home">
-          < </div>
-            <div id="highscore-cookie"></div>
-            <button onclick="resetCookie();">Reset</button>
+        <div class="highscore-list">
+          <div id="back-home">
+            < </div>
+              <div id="highscore-cookie"></div>
+              <button class="reset"onclick="resetCookie();">RESET</button>
+          </div>
         </div>
       </div>
       <!--/highscore -->
@@ -101,7 +103,7 @@
         <div id="save-score">
           <form>
             <input type="text" name="scorePlayer" id="scorePlayer" placeholder="Pseudo" />
-            <input type="submit" onClick="saveScore();" value="Save" />
+            <input type="submit" onClick="saveScore();" value="SAVE" />
           </form>
         </div>
       </div>
