@@ -88,12 +88,9 @@ function level(i) {
     $('.suiv').removeClass('hide-opacity');
   }
 
-  $('.choice')
-    .fadeOut(function () {
-      $(this)
-        .text(levels[i].name)
-        .fadeIn(10);
-    });
+  $('.choice').fadeOut(function() {
+    $(this).text(levels[i].name).fadeIn(0);
+  });
 }
 
 function getScore() {
