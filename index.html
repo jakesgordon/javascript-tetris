@@ -18,7 +18,6 @@
 
       <div id="home">
         <h1 class="titre">Tetris In JavaScript</h1>
-
         <div class="home-link">
           <a id="play">New Game</a>
           <div>
@@ -50,6 +49,12 @@
             <p>Rows
               <span id="rows">0</span>
             </p>
+            <p>
+              <button id="pButton" class="play" onclick="playAudio()"></button>
+              <audio id="sound"controls>
+                <source src="song/tetris.mp3" type="audio/mpeg" />
+              </audio>
+            </p>
           </div>
         </div>
         <div class="tetris-item">
@@ -57,7 +62,7 @@
             Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
           </canvas>
         </div>
-          
+
       </div>
       <!--/tetris -->
 
@@ -67,7 +72,7 @@
           <div id="back-home">
             < </div>
               <div id="highscore-cookie"></div>
-              <button class="reset"onclick="resetCookie();">RESET</button>
+              <button class="reset" onclick="resetCookie();">RESET</button>
           </div>
         </div>
       </div>

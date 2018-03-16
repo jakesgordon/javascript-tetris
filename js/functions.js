@@ -675,3 +675,19 @@ function drawBlock(ctx, x, y, color) {
     ctx.fillRect(x * dx, y * dy, dx, dy);
     ctx.strokeRect(x * dx, y * dy, dx, dy)
 }
+
+//
+// Audio
+//
+function playAudio() {
+    var music = $('#sound');
+	if (music.paused) {
+		music.play();
+		pButton.className = "";
+		pButton.className = "pause";
+	} else {
+		music.pause();
+		pButton.className = "";
+		pButton.className = "play";
+	}
+}
