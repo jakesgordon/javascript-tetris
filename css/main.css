@@ -73,7 +73,7 @@ button:hover {
     margin: 1em 0;
     text-align: center;
     color: #fff;
-    font-size: 35px;
+    font-size: 4vh;
 }
 
 #menu p a {
@@ -88,15 +88,18 @@ button:hover {
 }
 
 .modal {
-    width: 450px;
-    height: 400px;
+    width: 40vh;
+    height: 40vh;
     background-color: rgba(237, 231, 246, 0.9);
     position: absolute;
-    top: 25%;
-    left: 37vw;
     z-index: 1000000;
     font-family: 'Roboto', sans-serif;
     text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* compatibilitÃ© : ie9+ */
 }
 
 .wrapper {
@@ -110,6 +113,7 @@ button:hover {
 .wrapper h1 {
     align-self: center;
     justify-self: center;
+    font-size: 3.5vh;
 }
 
 .wrapper>div {
@@ -118,6 +122,7 @@ button:hover {
 
 .wrapper button {
     border-radius: 3px;
+    font-size: 2.3vh;
 }
 
 #score {
@@ -209,7 +214,7 @@ a {
 .titre {
     text-align: center;
     padding-top: 0.5em;
-    font-size: 53px;
+    font-size: 6vh;
     /* border: 1px solid red; */
     color: #375778;
     font-weight: 800;
@@ -219,7 +224,7 @@ a {
 }
 
 .home-link {
-    font-size: 48px;
+    font-size: 6vh;
     /* border: 4px solid green; */
     height: 100%;
     line-height: 2.3em;
@@ -275,7 +280,11 @@ i:hover {
 
 #score-player,
 .score-player {
-    font-size: 30px;
+    font-size: 3vh;
+}
+
+#save-score{
+    margin-bottom: 15px;
 }
 
 input {
@@ -287,7 +296,7 @@ input[type="text"] {
     padding: 11px 20px;
     border-radius: 3px;
     border: 1px solid #2098D1;
-    font-size: 18px;
+    font-size: 1.8vh;
 }
 
 input[type="text"]:focus {
@@ -296,13 +305,14 @@ input[type="text"]:focus {
     box-shadow: 0px -1px 10px 2px rgba(214, 211, 214, 1)
 }
 
-input[type="submit"], .reset {
+input[type="submit"],
+.reset {
     -webkit-border-radius: 3;
     -moz-border-radius: 3;
     border-radius: 3px;
     font-family: Arial;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 1.9vh;
     background: #2098D1;
     padding: 10px 20px 12px 20px;
     text-decoration: none;
@@ -310,7 +320,8 @@ input[type="submit"], .reset {
     margin-top: 1px;
 }
 
-input[type="submit"]:hover, .reset:hover {
+input[type="submit"]:hover,
+.reset:hover {
     background: #3cb0fd;
     text-decoration: none;
 }
@@ -324,28 +335,29 @@ input[type="submit"]:hover, .reset:hover {
     font-size: 30px;
 }
 
-.highscore-player-name{
-    font-weight:600;
-    color:#36424e;
-}
-.highscore-player-score{
-    font-weight:600;
-    color:#fff;
+.highscore-player-name {
+    font-weight: 600;
+    color: #36424e;
 }
 
-.highscore-playercookie{
+.highscore-player-score {
+    font-weight: 600;
+    color: #fff;
+}
+
+.highscore-playercookie {
     background: #fff;
-    color:#36424e;
-    padding: 7px 15px; 
+    color: #36424e;
+    padding: 7px 15px;
     border-radius: 3px;
 }
 
-.highscore-playercookie-name{
-    font-weight:600;
-
+.highscore-playercookie-name {
+    font-weight: 600;
 }
-.highscore-playercookie-score{
-    font-weight:600;
-    color:#e74c3c;
+
+.highscore-playercookie-score {
+    font-weight: 600;
+    color: #e74c3c;
     /* color:#74b9ff; */
 }

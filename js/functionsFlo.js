@@ -89,7 +89,7 @@ function level(i) {
   }
 
   $('.choice').fadeOut(function() {
-    $(this).text(levels[i].name).fadeIn(0);
+    $(this).text(levels[i].name).fadeIn();
   });
 }
 
