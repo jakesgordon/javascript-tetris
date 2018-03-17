@@ -1,16 +1,63 @@
-// ------------------------------------------------------------------------- base
-// helper methods
 // -------------------------------------------------------------------------
+// base helper methods
+// -------------------------------------------------------------------------
+
+var slow = {
+    name: 'slow',
+    speed: 0.8
+}
+var normal = {
+    name: 'normal',
+    speed: 0.6
+}
+var fast = {
+    name: 'fast',
+    speed: 0.3
+}
+var insane = {
+    name: 'insane',
+    speed: 0.1
+}
+
+var levels = [slow, normal, fast, insane];
+
+var indice = 1;
+
+var score1 = {
+    name: 'Dadju',
+    score: 4543
+}
+var score2 = {
+    name: 'Lartiste',
+    score: 3245
+}
+var score3 = {
+    name: 'RedHot',
+    score: 1320
+}
+var score4 = {
+    name: 'Bester',
+    score: 834
+}
+var score5 = {
+    name: 'Stikar',
+    score: 548
+}
+
+var tabScore = [score2, score4, score3, score1, score5];
 
 function get(id) {
     return document.getElementById(id);
 }
+
 function hide(id) {
     get(id).style.visibility = 'hidden';
 }
+
 function show(id) {
     get(id).style.visibility = null;
 }
+
 function html(id, html) {
     get(id).innerHTML = html;
 }
@@ -18,9 +65,11 @@ function html(id, html) {
 function timestamp() {
     return new Date().getTime();
 }
+
 function random(min, max) {
     return (min + (Math.random() * (max - min)));
 }
+
 function randomChoice(choices) {
     return choices[Math.round(random(0, choices.length - 1))];
 }
@@ -31,13 +80,13 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
     }
 }
 
-// ------------------------------------------------------------------------- game
-// constants
+// -------------------------------------------------------------------------
+// game constants
 // -------------------------------------------------------------------------
 
 var KEY = {
         ESC: 27,
-        SPACE: 32,
+        //SPACE: 32,
         LEFT: 37,
         UP: 38,
         RIGHT: 39,
@@ -57,16 +106,17 @@ var KEY = {
     ucanvas = get('upcoming'),
     uctx = ucanvas.getContext('2d'),
     speed = {
-        start: 0.6,
-        decrement: 0.005,
-        min: 0.1
+        start: levels[indice].speed, // vitesse de départ des blocs
+        decrement: 0.005, // a chaque fois que le joueur detruit une row
+        // le jeu s'accélere de speed.start - (speed.decrement * row)
+        min: 0.1 // vitesse maximum des blocs
     }, // how long before piece drops by 1 row (seconds)
     nx = 10, // width of tetris court (in blocks)
     ny = 20, // height of tetris court (in blocks)
     nu = 5; // width/height of upcoming preview (in blocks)
 
-// ------------------------------------------------------------------------- game
-// variables (initialized during reset)
+// -------------------------------------------------------------------------
+// game variables (initialized during reset)
 // -------------------------------------------------------------------------
 
 var dx,
@@ -74,6 +124,7 @@ var dx,
     blocks, // 2 dimensional array (nx*ny) representing tetris court - either empty block or occupied by a 'piece'
     actions, // queue of user actions (inputs)
     playing, // true|false - game is in progress
+    pause, // if the game is in pause or not
     dt, // time since starting this game
     current, // the current piece
     next, // the next piece
@@ -86,12 +137,12 @@ var dx,
 // tetris pieces
 //
 // blocks: each element represents a rotation of the piece (0, 90, 180, 270)
-//     each element is a 16 bit integer where the 16 bits represent         a
-// 4x4 set of blocks, e.g. j.blocks[0] = 0x44C0
+// each element is a 16 bit integer where the 16 bits represent         a 4x4
+// set of blocks, e.g. j.blocks[0] = 0x44C0
 //
 //             0100 = 0x4 << 3 = 0x4000             0100 = 0x4 << 2 = 0x0400
-//         1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000
-//                       ------                               0x44C0
+// 1100 = 0xC << 1 = 0x00C0             0000 = 0x0 << 0 = 0x0000
+// ------                               0x44C0
 //
 //-------------------------------------------------------------------------
 
@@ -100,49 +151,49 @@ var i = {
     blocks: [
         0x0F00, 0x2222, 0x00F0, 0x4444
     ],
-    color: 'cyan'
+    color: '#45aaf2', // cyan
 };
 var j = {
     size: 3,
     blocks: [
         0x44C0, 0x8E00, 0x6440, 0x0E20
     ],
-    color: 'blue'
+    color: '#3867d6' // blue
 };
 var l = {
     size: 3,
     blocks: [
         0x4460, 0x0E80, 0xC440, 0x2E00
     ],
-    color: 'orange'
+    color: '#fd9644' //orange
 };
 var o = {
     size: 2,
     blocks: [
         0xCC00, 0xCC00, 0xCC00, 0xCC00
     ],
-    color: 'yellow'
+    color: '#fed330' //yellow
 };
 var s = {
     size: 3,
     blocks: [
         0x06C0, 0x8C40, 0x6C00, 0x4620
     ],
-    color: 'green'
+    color: '#26de81' //green
 };
 var t = {
     size: 3,
     blocks: [
         0x0E40, 0x4C40, 0x4E00, 0x4640
     ],
-    color: 'purple'
+    color: '#a55eea' //purple
 };
 var z = {
     size: 3,
     blocks: [
         0x0C60, 0x4C80, 0xC600, 0x2640
     ],
-    color: 'red'
+    color: '#fc5c65' //red
 };
 
 // ------------------------------------------------ do the bit manipulation and
@@ -165,8 +216,8 @@ function eachblock(type, x, y, dir, fn) {
     }
 }
 
-// ----------------------------------------------------- check if a piece can fit
-// into a position in the grid
+// ----------------------------------------------------- check if a piece can
+// fit into a position in the grid
 // -----------------------------------------------------
 function occupied(type, x, y, dir) {
     var result = false
@@ -182,10 +233,11 @@ function unoccupied(type, x, y, dir) {
     return !occupied(type, x, y, dir);
 }
 
-// ----------------------------------------- start with 4 instances of each piece
-// and pick randomly until the 'bag is empty'
+// ----------------------------------------- start with 4 instances of each
+// piece and pick randomly until the 'bag is empty'
 // -----------------------------------------
 var pieces = [];
+
 function randomPiece() {
     if (pieces.length == 0) 
         pieces = [
@@ -235,6 +287,42 @@ function showStats() {
 function addEvents() {
     document.addEventListener('keydown', keydown, false);
     window.addEventListener('resize', resize, false);
+
+    $('#play').click(function () {
+        showHomeMenu();
+        play();
+    });
+
+    $('#highscore-link').click(function () {
+        showHighscore();
+    });
+
+    $('#back-home').click(function () {
+        showHighscore();
+    });
+
+    $("#reprendre").click(function () {
+        resume();
+    });
+    $("#abandonner").click(function () {
+        resume();
+        lose();
+        showHomeMenu();
+    })
+    $("#retourMenu").click(function () {
+        $("#menuLose")
+            .fadeOut("fast", function () {
+                showHomeMenu();
+
+            });
+    });
+    $("#recommencer").click(function () {
+        $("#menuLose")
+            .fadeOut("fast", function () {
+                play();
+            });
+    });
+
 }
 
 function resize(event) {
@@ -269,79 +357,137 @@ function keydown(ev) {
                 handled = true;
                 break;
             case KEY.ESC:
-                lose();
+                resume();
                 handled = true;
                 break;
         }
-    } else if (ev.keyCode == KEY.SPACE) {
-        play();
-        handled = true;
     }
+    /* else if (ev.keyCode == KEY.SPACE) {
+           play();
+           handled = true;
+       } */
     if (handled) 
         ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
     }
 
-// ------------------------------------------------------------------------- GAME
-// LOGIC
+// -------------------------------------------------------------------------
+// GAME LOGIC
 // -------------------------------------------------------------------------
 
+function setSpeed() {
+    speed.start = levels[indice].speed;
+}
 function play() {
-    hide('start');
+    setSpeed();
     reset();
     playing = true;
 }
+
+// fonction pause
+function resume() {
+    if (pause) {
+        $("#menuResume")
+            .fadeOut("fast", function () {
+                // Animation complete
+            });
+        pause = false;
+    } else {
+        $("#menuResume")
+            .fadeIn("fast", function () {
+                // Animation complete
+            });
+        pause = true;
+    }
+}
+
 function lose() {
-    show('start');
+
+    if (getHighScorePlayer().score > score) {
+        $('#save-score').addClass('hide');
+    } else {
+        $('#save-score').removeClass('hide');
+    }
+    $('#score-player').html(score);
     setVisualScore();
+    pause = false;
     playing = false;
+}
+
+function showLoseMenu() {
+    $("#menuLose")
+        .fadeIn("fast", function () {
+            // Animation complete
+        });
+}
+function showHomeMenu() {
+    $('#tetris').toggleClass('hide');
+    $('#home').toggleClass('hide');
+    $('#tetris').toggleClass('tetris-container');
+}
+
+function showHighscore() {
+    $('#highscore').toggleClass('hide');
+    $('#home').toggleClass('hide');
 }
 
 function setVisualScore(n) {
     vscore = n || score;
     invalidateScore();
 }
+
 function setScore(n) {
     score = n;
     setVisualScore(n);
 }
+
 function addScore(n) {
     score = score + n;
 }
+
 function clearScore() {
     setScore(0);
 }
+
 function clearRows() {
     setRows(0);
 }
+
 function setRows(n) {
     rows = n;
     step = Math.max(speed.min, speed.start - (speed.decrement * rows));
     invalidateRows();
 }
+
 function addRows(n) {
     setRows(rows + n);
 }
+
 function getBlock(x, y) {
     return (blocks && blocks[x]
         ? blocks[x][y]
         : null);
 }
+
 function setBlock(x, y, type) {
     blocks[x] = blocks[x] || [];
     blocks[x][y] = type;
     invalidate();
 }
+
 function clearBlocks() {
     blocks = [];
     invalidate();
 }
+
 function clearActions() {
     actions = [];
 }
+
 function setCurrentPiece(piece) {
     current = piece || randomPiece();
     invalidate();
 }
+
 function setNextPiece(piece) {
     next = piece || randomPiece();
     invalidateNext();
@@ -359,14 +505,17 @@ function reset() {
 
 function update(idt) {
     if (playing) {
-        if (vscore < score) 
-            setVisualScore(vscore + 1);
-        handle(actions.shift());
-        dt = dt + idt;
-        if (dt > step) {
-            dt = dt - step;
-            drop();
+        if (!pause) {
+            if (vscore < score) 
+                setVisualScore(vscore + 1);
+            handle(actions.shift());
+            dt = dt + idt;
+            if (dt > step) {
+                dt = dt - step;
+                drop();
+            }
         }
+
     }
 }
 
@@ -431,6 +580,7 @@ function drop() {
         clearActions();
         if (occupied(current.type, current.x, current.y, current.dir)) {
             lose();
+            showLoseMenu();
         }
     }
 }
@@ -484,20 +634,24 @@ var invalid = {};
 function invalidate() {
     invalid.court = true;
 }
+
 function invalidateNext() {
     invalid.next = true;
 }
+
 function invalidateScore() {
     invalid.score = true;
 }
+
 function invalidateRows() {
     invalid.rows = true;
 }
 
 function draw() {
     ctx.save();
-    ctx.lineWidth = 1;
-    ctx.translate(0.5, 0.5); // for crisp 1px black lines
+    ctx.lineWidth = .8;
+    ctx.translate(-0.1, 0.1); // for crisp 1px black lines
+    ctx.strokeStyle = "#fff";
     drawCourt();
     drawNext();
     drawScore();
@@ -528,11 +682,12 @@ function drawNext() {
     if (invalid.next) {
         var padding = (nu - next.type.size) / 2; // half-arsed attempt at centering next piece display
         uctx.save();
-        uctx.translate(0.5, 0.5);
+        uctx.translate(1, 1);
+        uctx.strokeStyle = "#fff";
         uctx.clearRect(0, 0, nu * dx, nu * dy);
         drawPiece(uctx, next.type, padding, padding, next.dir);
-        uctx.strokeStyle = 'black';
-        uctx.strokeRect(0, 0, nu * dx - 1, nu * dy - 1);
+        uctx.strokeStyle = 'white';
+        uctx.strokeRect(6, 6, nu * dx - 1, nu * dy - 1);
         uctx.restore();
         invalid.next = false;
     }
@@ -564,3 +719,394 @@ function drawBlock(ctx, x, y, color) {
     ctx.strokeRect(x * dx, y * dy, dx, dy)
 }
 
+//
+// Audio
+//
+function playAudio() {
+    var music = $('#sound')[0];
+    if (music.paused) {
+        music.play();
+        pButton.className = "";
+        pButton.className = "pause";
+    } else {
+        music.pause();
+        pButton.className = "";
+        pButton.className = "play";
+    }
+}
+
+var slow = {
+    name: 'slow',
+    speed: 0.8
+}
+var normal = {
+    name: 'normal',
+    speed: 0.6
+}
+var fast = {
+    name: 'fast',
+    speed: 0.3
+}
+var insane = {
+    name: 'insane',
+    speed: 0.1
+}
+
+var levels = [slow, normal, fast, insane];
+
+var indice = 1;
+
+var score1 = {
+    name: 'Dadju',
+    score: 4543
+}
+var score2 = {
+    name: 'Lartiste',
+    score: 3245
+}
+var score3 = {
+    name: 'RedHot',
+    score: 1320
+}
+var score4 = {
+    name: 'Bester',
+    score: 834
+}
+var score5 = {
+    name: 'Stikar',
+    score: 548
+}
+
+var tabScore = [score2, score4, score3, score1, score5];
+
+function chargerPage() {
+    $('#tetris').addClass('hide');
+
+    $('.choice').html(levels[indice].name);
+
+    if (getHighScorePlayer() != "") {
+        tabScore.push(getHighScorePlayer());
+        document
+            .getElementById('scorePlayer')
+            .value = getCookie('NamePlayer');
+    }
+
+    $('#highscore-cookie').html(getHighScore());
+
+    $('#highscore-player').html(getHighScorePlayer().score);
+
+}
+
+function prec() {
+    var a = levels[i];
+
+    indice -= 1;
+    level(indice);
+
+}
+
+function suiv() {
+    if (levels.length) 
+    ;
+    indice += 1;
+    level(indice);
+}
+
+function level(i) {
+    if (indice == 0) {
+        $('.prec').addClass('hide-opacity');
+    } else {
+        $('.prec').removeClass('hide-opacity');
+    }
+
+    if (indice == levels.length - 1) {
+        $('.suiv').addClass('hide-opacity');
+    } else {
+        $('.suiv').removeClass('hide-opacity');
+    }
+
+    $('.choice')
+        .fadeOut(function () {
+            $(this)
+                .text(levels[i].name)
+                .fadeIn();
+        });
+}
+
+function getScore() {
+    return score;
+}
+
+function getHighScorePlayer() {
+
+    if (getCookie('NamePlayer') && getCookie('ScorePlayer')) {
+        return scorePlayer = {
+            name: getCookie('NamePlayer'),
+            score: getCookie('ScorePlayer')
+        }
+    } else {
+        return "";
+    }
+}
+
+function getHighScore() {
+
+    var tab_en_ordre = false;
+    var taille = tabScore.length;
+    while (!tab_en_ordre) {
+        tab_en_ordre = true;
+        for (var i = 0; i < taille - 1; i++) {
+            if (tabScore[i].score < tabScore[i + 1].score) {
+                temp = tabScore[i];
+                tabScore[i] = tabScore[i + 1];
+                tabScore[i + 1] = temp;
+                tab_en_ordre = false;
+            }
+        }
+        taille--;
+    }
+
+    var listeScore = "";
+    for (var i = 0; i < tabScore.length; i++) {
+        if (getCookie("NamePlayer") == tabScore[i].name) {
+            listeScore += "<span class='highscore-playercookie'><span class='highscore-playercookie-name'>" + tabScore[i].name + "</span>: <span class='highscore-playercookie-score'>" + tabScore[i].score + "</span></span> <br>";
+        } else {
+            listeScore += "<span class='highscore-player-name'>" + tabScore[i].name + "</span> : <span class='highscore-player-score'>" + tabScore[i].score + "</span> <br>";
+        }
+    }
+
+    return listeScore;
+}
+
+function createCookie(nom, valeur, jours) {
+    // Le nombre de jours est spécifié
+    if (jours) {
+        var date = new Date();
+        // Converti le nombre de jour en millisecondes
+        date.setTime(date.getTime() + (jours * 24 * 60 * 60 * 1000));
+        var expire = "; expire=" + date.toGMTString( // Aucune valeur de jours spécifiée
+        );
+    } else 
+        var expire = "";
+    document.cookie = nom + "=" + valeur + expire + "; path=/";
+}
+function getCookie(nom) {
+    // Ajoute le signe égale virgule au nom pour la recherche
+    var nom2 = nom + "=";
+    // Array contenant tous les cookies
+    var arrCookies = document
+        .cookie
+        .split(';');
+    // Cherche l'array pour le cookie en question
+    for (var i = 0; i < arrCookies.length; i++) {
+        var a = arrCookies[i];
+        // Si c'est un espace, enlever
+        while (a.charAt(0) == ' ') {
+            a = a.substring(1, a.length);
+        }
+        if (a.indexOf(nom2) == 0) {
+            return a.substring(nom2.length, a.length);
+        }
+    }
+    // Aucun cookie trouvé
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name, "", -1);
+}
+function eraseCookieFromAllPaths(name) {
+    // This function will attempt to remove a cookie from all paths.
+    var pathBits = location
+        .pathname
+        .split('/');
+    var pathCurrent = ' path=';
+
+    // do a simple pathless delete first.
+    document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+
+    for (var i = 0; i < pathBits.length; i++) {
+        pathCurrent += ((pathCurrent.substr(-1) != '/')
+            ? '/'
+            : '') + pathBits[i];
+        document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
+    }
+}
+
+function saveScore() {
+    createCookie('NamePlayer', document.getElementById('scorePlayer').value, 365);
+    createCookie('ScorePlayer', score, 365);
+}
+
+function resetCookie() {
+    eraseCookieFromAllPaths('NamePlayer');
+    eraseCookieFromAllPaths('ScorePlayer');
+    createCookie('Reset', true, 365);
+    location.reload();
+}
+
+function chargerPage() {
+    $('#tetris').addClass('hide');
+
+    $('.choice').html(levels[indice].name);
+
+    if (getHighScorePlayer() != "") {
+        tabScore.push(getHighScorePlayer());
+        document
+            .getElementById('scorePlayer')
+            .value = getCookie('NamePlayer');
+    }
+
+    $('#highscore-cookie').html(getHighScore());
+
+    $('#highscore-player').html(getHighScorePlayer().score);
+
+}
+
+function prec() {
+    var a = levels[i];
+
+    indice -= 1;
+    level(indice);
+
+}
+
+function suiv() {
+    if (levels.length) 
+    ;
+    indice += 1;
+    level(indice);
+}
+
+function level(i) {
+    if (indice == 0) {
+        $('.prec').addClass('hide-opacity');
+    } else {
+        $('.prec').removeClass('hide-opacity');
+    }
+
+    if (indice == levels.length - 1) {
+        $('.suiv').addClass('hide-opacity');
+    } else {
+        $('.suiv').removeClass('hide-opacity');
+    }
+
+    $('.choice')
+        .fadeOut(function () {
+            $(this)
+                .text(levels[i].name)
+                .fadeIn();
+        });
+}
+
+function getScore() {
+    return score;
+}
+
+function getHighScorePlayer() {
+
+    if (getCookie('NamePlayer') && getCookie('ScorePlayer')) {
+        return scorePlayer = {
+            name: getCookie('NamePlayer'),
+            score: getCookie('ScorePlayer')
+        }
+    } else {
+        return "";
+    }
+}
+
+function getHighScore() {
+
+    var tab_en_ordre = false;
+    var taille = tabScore.length;
+    while (!tab_en_ordre) {
+        tab_en_ordre = true;
+        for (var i = 0; i < taille - 1; i++) {
+            if (tabScore[i].score < tabScore[i + 1].score) {
+                temp = tabScore[i];
+                tabScore[i] = tabScore[i + 1];
+                tabScore[i + 1] = temp;
+                tab_en_ordre = false;
+            }
+        }
+        taille--;
+    }
+
+    var listeScore = "";
+    for (var i = 0; i < tabScore.length; i++) {
+        if (getCookie("NamePlayer") == tabScore[i].name) {
+            listeScore += "<span class='highscore-playercookie'><span class='highscore-playercookie-name'>" + tabScore[i].name + "</span>: <span class='highscore-playercookie-score'>" + tabScore[i].score + "</span></span> <br>";
+        } else {
+            listeScore += "<span class='highscore-player-name'>" + tabScore[i].name + "</span> : <span class='highscore-player-score'>" + tabScore[i].score + "</span> <br>";
+        }
+    }
+
+    return listeScore;
+}
+
+function createCookie(nom, valeur, jours) {
+    // Le nombre de jours est spécifié
+    if (jours) {
+        var date = new Date();
+        // Converti le nombre de jour en millisecondes
+        date.setTime(date.getTime() + (jours * 24 * 60 * 60 * 1000));
+        var expire = "; expire=" + date.toGMTString( // Aucune valeur de jours spécifiée
+        );
+    } else 
+        var expire = "";
+    document.cookie = nom + "=" + valeur + expire + "; path=/";
+}
+function getCookie(nom) {
+    // Ajoute le signe égale virgule au nom pour la recherche
+    var nom2 = nom + "=";
+    // Array contenant tous les cookies
+    var arrCookies = document
+        .cookie
+        .split(';');
+    // Cherche l'array pour le cookie en question
+    for (var i = 0; i < arrCookies.length; i++) {
+        var a = arrCookies[i];
+        // Si c'est un espace, enlever
+        while (a.charAt(0) == ' ') {
+            a = a.substring(1, a.length);
+        }
+        if (a.indexOf(nom2) == 0) {
+            return a.substring(nom2.length, a.length);
+        }
+    }
+    // Aucun cookie trouvé
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name, "", -1);
+}
+function eraseCookieFromAllPaths(name) {
+    // This function will attempt to remove a cookie from all paths.
+    var pathBits = location
+        .pathname
+        .split('/');
+    var pathCurrent = ' path=';
+
+    // do a simple pathless delete first.
+    document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+
+    for (var i = 0; i < pathBits.length; i++) {
+        pathCurrent += ((pathCurrent.substr(-1) != '/')
+            ? '/'
+            : '') + pathBits[i];
+        document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
+    }
+}
+
+function saveScore() {
+    createCookie('NamePlayer', document.getElementById('scorePlayer').value, 365);
+    createCookie('ScorePlayer', score, 365);
+}
+
+function resetCookie() {
+    eraseCookieFromAllPaths('NamePlayer');
+    eraseCookieFromAllPaths('ScorePlayer');
+    createCookie('Reset', true, 365);
+    location.reload();
+}

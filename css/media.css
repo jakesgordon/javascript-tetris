@@ -1,9 +1,5 @@
 
 @media screen and (min-width : 0px) and (min-height : 0px) {
-    #tetris {
-        font-size: 0.75em;
-        width: 250px;
-    }
     #menu {
         width: 100px;
         height: 200px;
@@ -22,10 +18,6 @@
 /* 10px chunks */
 
 @media screen and (min-width: 400px) and (min-height: 400px) {
-    #tetris {
-        font-size: 1.00em;
-        width: 350px;
-    }
     #menu {
         width: 150px;
         height: 300px;
@@ -44,10 +36,6 @@
 /* 15px chunks */
 
 @media screen and (min-width: 500px) and (min-height: 500px) {
-    #tetris {
-        font-size: 1.25em;
-        width: 450px;
-    }
     #menu {
         width: 200px;
         height: 400px;
@@ -66,10 +54,6 @@
 /* 20px chunks */
 
 @media screen and (min-width: 600px) and (min-height: 600px) {
-    #tetris {
-        font-size: 1.50em;
-        width: 550px;
-    }
     #menu {
         width: 250px;
         height: 500px;
@@ -88,10 +72,7 @@
 /* 25px chunks */
 
 @media screen and (min-width: 700px) and (min-height: 700px) {
-    #tetris {
-        font-size: 1.75em;
-        width: 650px;
-    }
+
     #menu {
         width: 300px;
         height: 600px;
@@ -110,10 +91,6 @@
 /* 30px chunks */
 
 @media screen and (min-width: 800px) and (min-height: 800px) {
-    #tetris {
-        font-size: 2.00em;
-        width: 750px;
-    }
     #menu {
         width: 350px;
         height: 700px;
@@ -132,10 +109,6 @@
 /* 35px chunks */
 
 @media screen and (min-width: 900px) and (min-height: 900px) {
-    #tetris {
-        font-size: 2.25em;
-        width: 850px;
-    }
     #menu {
         width: 400px;
         height: 800px;

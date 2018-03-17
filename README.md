@@ -8,33 +8,15 @@ An HTML5 Tetris Game
  * view the [source](https://github.com/jakesgordon/javascript-tetris)
 
 >> _*SUPPORTED BROWSERS*: Chrome, Firefox, Safari, Opera and IE9+_
+>> COOKIE DID NOT WORK ON CHROME IF YOU'RE IN LOCAL, You must have a server (like wamp or xampp)
 
 FUTURE
 ======
 
- * menu
  * animation and fx
- * levels
- * high scores
  * touch support
- * music and sound fx
-
-TÂCHES
-======
-* 1 - affichage de fin de partie (proposition rejouer / retour menu) 
-* 2 - Page Menu avec "Play game" / "Levels" / "high score" ~ FLORENT
-* 3 - fonctionnalité Play Game ~ GAB
-* 4 - fonctionnalité Levels 
-* 5 - Page High Score qui affiche les HighScores enregistrés en cookie avec option reset 
-* 6 - fonctionnalité de musique de fond avec bouton lancer/couper 
-* 7 - fonctionnalité pause 
-* 8 - Resystilisé l'interface : 
-    * 8.1 - changer couleur bloc
-    * 8.2 - changer css page de jeu
 
 License
 =======
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
-
-
