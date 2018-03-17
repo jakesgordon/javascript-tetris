@@ -42,15 +42,19 @@ button:hover {
 }
 
 #pButton{
+    position: absolute;
 	height:60px;
 	width: 60px;
 	border: none;
 	background-size: 50% 50%;
-	background-position: center;
+    background-position: center;
+    z-index: 1000;
 }
 .play{background: url('../img/noSound.png') no-repeat;}
 .pause{background: url('../img/sound.png') no-repeat;}
-
+#pButton:hover{
+    cursor: pointer;
+}
 #tetris {
     /* margin: 1em auto;
     padding: 1em;

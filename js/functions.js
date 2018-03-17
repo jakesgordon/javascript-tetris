@@ -680,7 +680,7 @@ function drawBlock(ctx, x, y, color) {
 // Audio
 //
 function playAudio() {
-    var music = $('#sound');
+    var music = $('#sound')[0];
 	if (music.paused) {
 		music.play();
 		pButton.className = "";
