@@ -345,10 +345,14 @@ input[type="submit"]:hover,
 }
 
 .highscore-list {
-    line-height: 60px;
-    font-size: 30px;
+    line-height: 8vh;
+    font-size: 4vh;
 }
 
+.highscore-list > button{
+    margin-top:2vh;
+    font-size: 4.3vh;
+}
 .highscore-player-name {
     font-weight: 600;
     color: #36424e;
