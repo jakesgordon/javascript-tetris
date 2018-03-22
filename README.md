@@ -8,21 +8,15 @@ An HTML5 Tetris Game
  * view the [source](https://github.com/jakesgordon/javascript-tetris)
 
 >> _*SUPPORTED BROWSERS*: Chrome, Firefox, Safari, Opera and IE9+_
+>> COOKIE DID NOT WORK ON CHROME IF YOU'RE IN LOCAL, You must have a server (like wamp or xampp)
 
 FUTURE
 ======
 
- * menu
  * animation and fx
- * levels
- * high scores
  * touch support
- * music and sound fx
-
 
 License
 =======
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
-
-
