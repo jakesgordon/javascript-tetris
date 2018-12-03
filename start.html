@@ -1,0 +1,127 @@
+<!DOCTYPE html> 
+<html>
+<head>
+  <title>Javascript Tetris</title>
+  <style>
+    body      { font-family: Helvetica, sans-serif; }
+     #tetris   { margin: 1em auto; padding: 1em; border: 4px solid black; border-radius: 10px; background: url(gip1.gif); }
+    #stats    { display: inline-block; vertical-align: top; }
+    #menu     { display: inline-block; vertical-align: top; position: relative; }
+    #menu p   { margin: 0.5em 0; text-align: center; }
+    #menu p a { text-decoration: none; color: black; }
+    @media screen and (min-width:   0px) and (min-height:   0px)  { #tetris { font-size: 0.75em; width: 250px; } #menu { width: 100px; height: 200px; } #upcoming { width:  50px; height:  50px; } #canvas { width: 100px; height: 200px; } } /* 10px chunks */
+    @media screen and (min-width: 400px) and (min-height: 400px)  { #tetris { font-size: 1.00em; width: 350px; } #menu { width: 150px; height: 300px; } #upcoming { width:  75px; height:  75px; } #canvas { width: 150px; height: 300px; } } /* 15px chunks */
+    @media screen and (min-width: 500px) and (min-height: 500px)  { #tetris { font-size: 1.25em; width: 450px; } #menu { width: 200px; height: 400px; } #upcoming { width: 100px; height: 100px; } #canvas { width: 200px; height: 400px; } } /* 20px chunks */
+    @media screen and (min-width: 600px) and (min-height: 600px)  { #tetris { font-size: 1.50em; width: 550px; } #menu { width: 250px; height: 500px; } #upcoming { width: 125px; height: 125px; } #canvas { width: 250px; height: 500px; } } /* 25px chunks */
+    @media screen and (min-width: 700px) and (min-height: 700px)  { #tetris { font-size: 1.75em; width: 650px; } #menu { width: 300px; height: 600px; } #upcoming { width: 150px; height: 150px; } #canvas { width: 300px; height: 600px; } } /* 30px chunks */
+    @media screen and (min-width: 800px) and (min-height: 800px)  { #tetris { font-size: 2.00em; width: 750px; } #menu { width: 350px; height: 700px; } #upcoming { width: 175px; height: 175px; } #canvas { width: 350px; height: 700px; } } /* 35px chunks */
+    @media screen and (min-width: 900px) and (min-height: 900px)  { #tetris { font-size: 2.25em; width: 850px; } #menu { width: 400px; height: 800px; } #upcoming { width: 200px; height: 200px; } #canvas { width: 400px; height: 800px; } } /* 40px chunks */
+  </style>
+</head>
+
+<body>
+
+
+  <div id="tetris">
+    <div id="menu">
+  
+<style>
+
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button
+{
+  width: 150px;
+  text-align: center;
+   align-items: center;
+  alignment-baseline: central;
+  margin:5 auto;
+  right: -150px;
+
+
+}
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+  align-content: center;
+}
+.button{
+   display: block;
+    margin-left: 500px;
+    position: absolute;
+    bottom: 250px;
+</style>
+ 
+<body>
+ 
+<a href="index.html" class="button">START</a>
+
+</body>
+<style>
+
+.Qbutton {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.Qbutton
+{
+  width: 150px;
+  text-align: center;
+   align-items: center;
+  alignment-baseline: central;
+  margin:5 auto;
+  right: -150px;
+
+
+}
+.Qbutton:hover {background-color: #3e8e41}
+
+.Qbutton:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+  align-content: center;
+}
+.Qbutton{
+   display: block;
+    margin-left: 500px;
+    position: absolute;
+    bottom: 150px;
+</style>
+<body>
+ 
+<a href="Javascript:window.close()" class="Qbutton">QUIT</a>
+
+
+
+</body>
+
