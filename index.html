@@ -3,18 +3,18 @@
 <head>
   <title>Javascript Tetris</title>
   <style>
-    body      { font-family: Helvetica, sans-serif; }
-    #tetris   { margin: 1em auto; padding: 1em; border: 4px solid black; border-radius: 10px; background-color: #F8F8F8; }
+    body      { font-family: Helvetica, sans-serif; color: white }
+    #tetris   { margin: 1em auto; padding: 1em; border: 4px solid black; border-radius: 20px; background: url(menu_bg.png); }
     #stats    { display: inline-block; vertical-align: top; }
-    #canvas   { display: inline-block; vertical-align: top; background: url(texture.jpg); box-shadow: 10px 10px 10px #999; border: 2px solid #333; }
-    #menu     { display: inline-block; vertical-align: top; position: relative; }
+    #canvas   { display: inline-block; vertical-align: bottom; background: url(background.png); border: 4px solid #250; }
+    #menu     { display: inline-block; vertical-align: top; position: relative;  }
     #menu p   { margin: 0.5em 0; text-align: center; }
-    #menu p a { text-decoration: none; color: black; }
-    #upcoming { display: block; margin: 0 auto; background-color: #E0E0E0; }
+    #menu p a { text-decoration: none; color: white; }
+    #upcoming { display: block; margin: 0 auto; background-color: white; }
     #score    { color: red; font-weight: bold; vertical-align: middle; }
     #rows     { color: blue; font-weight: bold; vertical-align: middle; }
     #stats    { position: absolute; bottom: 0em; right: 1em; }
-    @media screen and (min-width:   0px) and (min-height:   0px)  { #tetris { font-size: 0.75em; width: 250px; } #menu { width: 100px; height: 200px; } #upcoming { width:  50px; height:  50px; } #canvas { width: 100px; height: 200px; } } /* 10px chunks */
+    @media screen and (min-width:   0px) and (min-height:   0px)  { #tetris { font-size: 0.75em; width: 250px; } #menu { width: 100px; height: 200px; } #upcoming { width:  50px; height:  50px; border: 4px solid #333; background: url(upcoming_bg.png); } #canvas { width: 100px; height: 200px; } } /* 10px chunks */ 
     @media screen and (min-width: 400px) and (min-height: 400px)  { #tetris { font-size: 1.00em; width: 350px; } #menu { width: 150px; height: 300px; } #upcoming { width:  75px; height:  75px; } #canvas { width: 150px; height: 300px; } } /* 15px chunks */
     @media screen and (min-width: 500px) and (min-height: 500px)  { #tetris { font-size: 1.25em; width: 450px; } #menu { width: 200px; height: 400px; } #upcoming { width: 100px; height: 100px; } #canvas { width: 200px; height: 400px; } } /* 20px chunks */
     @media screen and (min-width: 600px) and (min-height: 600px)  { #tetris { font-size: 1.50em; width: 550px; } #menu { width: 250px; height: 500px; } #upcoming { width: 125px; height: 125px; } #canvas { width: 250px; height: 500px; } } /* 25px chunks */
@@ -25,19 +25,22 @@
 </head>
 
 <body>
+  <audio autoplay loop src="audio.mp3">
+  </audio>  
 
   <div id="tetris">
     <div id="menu">
-      <p id="start"><a href="javascript:play();">Press Space to Play.</a></p>
-      <p><canvas id="upcoming"></canvas></p>
-      <p>score <span id="score">00000</span></p>
-      <p>rows <span id="rows">0</span></p>
+      <p id="start"><a href="javascript:play();">Press Space to Play!</a></p>
+      <p><canvas id="upcoming" ></canvas></p>
+      <p>score: <span id="score" color: red>00000</span></p>
+      <p>rows cleared: <span id="rows">0</span></p>
+      <p></p>
     </div>
     <canvas id="canvas">
       Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
     </canvas>
   </div>
-
+<a href="index.html"> <img src="back_btn.png" width= "120" height= "50"/> </a>
   <script src="stats.js"></script>
   <script>
 
@@ -68,14 +71,15 @@
     // game constants
     //-------------------------------------------------------------------------
 
-    var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40 },
-        DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
+    var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, SHIFT: 16, P: 80 },
+        DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, BOTTOM: 4, MIN: 0, MAX: 3 },
         stats   = new Stats(),
         canvas  = get('canvas'),
         ctx     = canvas.getContext('2d'),
         ucanvas = get('upcoming'),
         uctx    = ucanvas.getContext('2d'),
         speed   = { start: 0.6, decrement: 0.005, min: 0.1 }, // how long before piece drops by 1 row (seconds)
+        paused  = 0,
         nx      = 10, // width of tetris court (in blocks)
         ny      = 20, // height of tetris court (in blocks)
         nu      = 5;  // width/height of upcoming preview (in blocks)
@@ -220,7 +224,22 @@
           case KEY.RIGHT:  actions.push(DIR.RIGHT); handled = true; break;
           case KEY.UP:     actions.push(DIR.UP);    handled = true; break;
           case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
+          case KEY.SHIFT:  
+                          if (actions[0] != DIR.BOTTOM) {
+                            actions.push(DIR.BOTTOM); handled = true;
+                          }
+                          break;
+
           case KEY.ESC:    lose();                  handled = true; break;
+          case KEY.P:
+            if(paused == 1) {
+              paused = 0;
+            }
+            else {
+              paused = 1;
+            }
+            handled = true;
+            break;
         }
       }
       else if (ev.keyCode == KEY.SPACE) {
@@ -231,7 +250,7 @@
         ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
     }
 
-    //-------------------------------------------------------------------------
+    //------------------------------------------------  -------------------------
     // GAME LOGIC
     //-------------------------------------------------------------------------
 
@@ -281,6 +300,7 @@
         case DIR.RIGHT: move(DIR.RIGHT); break;
         case DIR.UP:    rotate();        break;
         case DIR.DOWN:  drop();          break;
+        case DIR.BOTTOM: dropMany();     break;
       }
     }
 
@@ -311,6 +331,10 @@
     }
 
     function drop() {
+      if(paused == 0){
+        console.log("0");
+      
+
       if (!move(DIR.DOWN)) {
         addScore(10);
         dropPiece();
@@ -322,6 +346,20 @@
           lose();
         }
       }
+    }
+  }
+
+    function dropMany() {
+      while(move(DIR.DOWN)){ }
+        addScore(10);
+        dropPiece();
+        removeLines();
+        setCurrentPiece(next);
+        setNextPiece(randomPiece());
+        clearActions();
+        if (occupied(current.type, current.x, current.y, current.dir)) {
+          lose();
+        }
     }
 
     function dropPiece() {
