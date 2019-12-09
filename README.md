@@ -25,4 +25,5 @@ License
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
+[![Run on Repl.it](https://repl.it/badge/github/jakesgordon/javascript-tetris)](https://repl.it/github/jakesgordon/javascript-tetris)
 
