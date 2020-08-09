@@ -307,8 +307,28 @@
       if (unoccupied(current.type, current.x, current.y, newdir)) {
         current.dir = newdir;
         invalidate();
-      }
+      }else{
+        if (unoccupied(current.type, current.x+1, current.y, newdir)){
+          move(DIR.RIGHT)
+          current.dir = newdir;
+          invalidate();
+        }else if (unoccupied(current.type, current.x-1, current.y, newdir)){
+          move(DIR.LEFT)
+          current.dir = newdir;
+          invalidate();
+        }else if (unoccupied(current.type, current.x+2, current.y, newdir)){
+          move(DIR.RIGHT)
+          move(DIR.RIGHT)
+          current.dir = newdir;
+          invalidate();
+        }else{
+          move(DIR.LEFT)
+          move(DIR.LEFT)
+          current.dir = newdir;
+          invalidate();
+        }
     }
+  }
 
     function drop() {
       if (!move(DIR.DOWN)) {
