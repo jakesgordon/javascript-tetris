@@ -34,7 +34,7 @@
         scanvas = get('saved'),
         uctx    = ucanvas.getContext('2d'),
         sctx    = scanvas.getContext('2d'),
-        speed   = { start: 55.6, decrement: 0.005, min: 0.1 }, // how long before piece drops by 1 row (seconds)
+        speed   = { start: 0.6, decrement: 0.005, min: 0.1 }, // how long before piece drops by 1 row (seconds)
         nx      = 10, // width of tetris court (in blocks)
         ny      = 20, // height of tetris court (in blocks)
         nu      = 5;  // width/height of upcoming preview (in blocks)
