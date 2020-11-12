@@ -1,23 +1,19 @@
-Javascript Tetris
+(Modernized) Javascript Tetris
 =================
 
 An HTML5 Tetris Game
 
- * [play the game](http://codeincomplete.com/projects/tetris/)
- * read a [blog article](http://codeincomplete.com/posts/2011/10/10/javascript_tetris/)
- * view the [source](https://github.com/jakesgordon/javascript-tetris)
+ Changes from the [original](https://github.com/jakesgordon/javascript-tetris) by Jake Gordon
+
+* Added hold function
+* Added hard drop function
+* Made lose trigger more lenient
+* Fixed an issue where a piece too far to one side couldn't be flipped (Fix by TheSavageTeddy)
+* Added ghost piece
+* Removed random X coordinate on new pieces
+* Added grid background
 
 >> _*SUPPORTED BROWSERS*: Chrome, Firefox, Safari, Opera and IE9+_
-
-FUTURE
-======
-
- * menu
- * animation and fx
- * levels
- * high scores
- * touch support
- * music and sound fx
 
 
 License
