@@ -13,7 +13,7 @@ An HTML5 Tetris Game
 * Removed random X coordinate on new pieces
 * Added grid background
 
->> _*SUPPORTED BROWSERS*: Chrome, Firefox, Safari, Opera and IE9+_
+> _*SUPPORTED BROWSERS*: Chrome, Firefox, Safari, Opera and IE9+_
 
 
 License
