@@ -7,7 +7,7 @@ An HTML5 Tetris Game
  * read a [blog article](http://codeincomplete.com/posts/2011/10/10/javascript_tetris/)
  * view the [source](https://github.com/jakesgordon/javascript-tetris)
 
->> _*SUPPORTED BROWSERS*: Chrome, Firefox, Safari, Opera and IE9+_
+>> _*SUPPORTED BROWSERS*: Chrome, Microsoft Edge, Firefox, Safari, Opera and IE9+_
 
 FUTURE
 ======
