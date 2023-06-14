@@ -9,6 +9,13 @@ An HTML5 Tetris Game
 
 >> _*SUPPORTED BROWSERS*: Chrome, Firefox, Safari, Opera and IE9+_
 
+How to Play
+============
+
+* Press space to start the game
+* Use left, right and down arrow keys for the movement of tetris block
+* Use Up arrow key for rotating the tetris block
+
 FUTURE
 ======
 
