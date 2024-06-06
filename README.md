@@ -2,14 +2,7 @@ Frustrating Tetris
 ==================
 
 An HTML5 Frustrating Tetris Game
-
-Forked from https://github.com/jakesgordon/javascript-tetris
-into https://github.com/stasinos/javascript-tetris
-for pull requests of fixes and new features for the normal game.
-
-Forked again into https://bitbucket.org/stasinos/frustretris
-(private repo) for developing the "frustrating tetris" features.
-
+forked from https://github.com/jakesgordon/javascript-tetris
 
 Added features:
 
