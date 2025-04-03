@@ -25,4 +25,4 @@ License
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
-
+// Alterações na aula para exercícios no github
